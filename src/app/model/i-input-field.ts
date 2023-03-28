@@ -1,6 +1,7 @@
 import { ValidatorFn } from '@angular/forms';
+import { IWidget } from "./i-widget";
 
-export interface IInputField {
+export interface IInputField extends IWidget{
     isRequired?: boolean;
     maxLength?: number | null;
     minLength?: number | null;

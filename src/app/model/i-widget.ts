@@ -1,6 +1,7 @@
 export interface IWidget {
     id : number | string,
     type : string,
+    label?:string,
     name? : string,
     classNames? : string,
     subType? : string
