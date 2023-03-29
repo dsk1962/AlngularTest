@@ -1,0 +1,13 @@
+<div *ngIf="inputField" style="{{inputField.style}}" class="{{getClassName()}}">
+<label [for]="inputField.id" class="{{getLabelClassName()}}" >
+    <span>
+        {{inputField.label}}
+        <span class="dif-label-required" *ngIf="inputField.isRequired">*</span>
+    </span>
+</label>
+<input class="{{getInputClassName()}}"
+type="text"
+[id]="inputField.id"
+[placeholder]="inputField.label"
+>
+</div>

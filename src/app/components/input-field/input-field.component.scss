@@ -1,0 +1,21 @@
+.dif-label-top{
+    display:flex;
+    flex-direction: column;
+    padding:4px;
+}
+.dif-input{
+    flex:1;
+    margin-left:4px;
+}
+.dif-label{
+    width:100px;
+}
+.dif-label-required{
+    color:red;
+}
+.dif-label-left{
+    padding:4px;
+    display:flex;
+    flex-direction: row;
+}
+

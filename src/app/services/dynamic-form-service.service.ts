@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse,HttpResponse } from '@angular/common/http';
-import { Observable, throwError,lastValueFrom } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Observable, throwError, lastValueFrom } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { SafeHtml } from '@angular/platform-browser';
+import { IContainer } from '../model/i-widget'
 
 const endpoint = 'http://localhost:8099/test/content/';
 @Injectable({
@@ -23,13 +23,18 @@ export class DynamicFormServiceService {
     return throwError(() => 'Something bad happened; please try again later.');
   }
 
-  getResource(name: String): Promise<string>{
+  getResource(name: String): Promise<string> {
     const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
     const requestOptions: Object = {
       headers: headers,
       responseType: 'text'
-    } 
+    }
     return lastValueFrom(this.http.get<string>(
-      endpoint + name,requestOptions));
+      endpoint + name, requestOptions));
+  }
+
+  getFormDefinition(formName: string): Promise<IContainer> {
+    return lastValueFrom(this.http.get<IContainer>(
+      endpoint + 'forms/' + formName));
   }
 }

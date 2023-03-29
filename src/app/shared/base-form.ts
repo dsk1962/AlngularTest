@@ -1,7 +1,5 @@
 import { FormGroup, FormControl, AbstractControl, ValidatorFn } from '@angular/forms';
-import { IWidget, WIDGET_TYPES } from '../model/i-widget';
-import { IInputField } from '../model/i-input-field';
-import { IContainer } from '../model/i-container';
+import { IWidget, WIDGET_TYPES,IInputField,IContainer } from '../model/i-widget';
 
 export class BaseForm {
     public group?: FormGroup;

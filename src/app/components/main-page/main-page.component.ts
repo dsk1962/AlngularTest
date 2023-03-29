@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ExternalHtmlComponent } from '../external-html/external-html.component';
 
 @Component({
   selector: 'main-page',

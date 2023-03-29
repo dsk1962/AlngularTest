@@ -1,0 +1,10 @@
+<div *ngIf="container" class="row" style="{{container.style}}">
+
+    <div *ngFor="let widget of container.children; let i = index" [ngSwitch]="widget.type">
+        <ng-container *ngSwitchCase="WTYPES.INPUTFIELD">
+            <dynamic-input-field [inputWidget]="widget"></dynamic-input-field>
+        </ng-container>
+    </div>
+</div>
+
+
