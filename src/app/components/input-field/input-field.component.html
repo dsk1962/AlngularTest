@@ -1,13 +1,31 @@
-<div *ngIf="inputField" style="{{inputField.style}}" class="{{getClassName()}}">
-<label [for]="inputField.id" class="{{getLabelClassName()}}" >
-    <span>
-        {{inputField.label}}
-        <span class="dif-label-required" *ngIf="inputField.isRequired">*</span>
-    </span>
-</label>
-<input class="{{getInputClassName()}}"
-type="text"
-[id]="inputField.id"
-[placeholder]="inputField.label"
->
+<div *ngIf="inputField" [style]="inputField.style" class="{{getClassName()}}" [ngSwitch]="inputField.subType">
+    <label [for]="inputField.id" class="{{getLabelClassName()}}">
+        <span>
+            {{inputField.label}}
+            <span class="dif-label-required" *ngIf="inputField.isRequired">*</span>
+        </span>
+    </label>
+    <ng-container *ngSwitchCase="WSUBTYPES.CHECKBOX">
+        <p-checkbox formControlName="date"></p-checkbox>
+    </ng-container>
+    <ng-container *ngSwitchCase="WSUBTYPES.DATE">
+        <p-calendar [showIcon]="true" formControlName="date" placeholder="{{getPlaceholder()}}"></p-calendar>
+    </ng-container>
+    <ng-container *ngSwitchCase="WSUBTYPES.MASK">
+        <p-inputMask [mask]="inputField.mask ? inputField.mask:'*'" placeholder="{{getPlaceholder()}}"
+            class="{{getInputClassName()}}"></p-inputMask>
+    </ng-container>
+    <ng-container *ngSwitchCase="WSUBTYPES.NUMERIC">
+        <p-inputNumber [showButtons]="true" formControlName="date" placeholder="{{getPlaceholder()}}"></p-inputNumber>
+    </ng-container>
+    <ng-container *ngSwitchCase="WSUBTYPES.PASSWORD">
+        <p-password placeholder="{{getPlaceholder()}}" class="{{getInputClassName()}}" [toggleMask]="true"></p-password>
+    </ng-container>
+    <ng-container *ngSwitchCase="WSUBTYPES.TEXTAREA">
+        <textarea [rows]="inputField.config?.rows ? inputField.config?.rows : ''" pInputTextarea placeholder="{{getPlaceholder()}}"></textarea>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+        <input class="{{getInputClassName()}}" pInputText type="text" [id]="inputField.id"
+            placeholder="{{getPlaceholder()}}">
+    </ng-container>
 </div>

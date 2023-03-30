@@ -1,6 +1,6 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { Calendar } from 'primeng/calendar';
-import { IWidget, WIDGET_TYPES, IInputField, IContainer } from '../../model/i-widget';
+import { IWidget, WIDGET_TYPES,LAYOUT_TYPES, IInputField, IContainer } from '../../model/i-widget';
 import { FormGroup, FormControl, AbstractControl, ValidatorFn } from '@angular/forms';
 import { DynamicFormServiceService } from '../../services/dynamic-form-service.service';
 
@@ -62,6 +62,14 @@ export class DynamicFormComponent {
   //     this.getField(id)?.patchValue(value, options);
   // }
 
+  getClassName(): string {
+    let result = 'dynamic-container dynamic-form ' + (this.container?.layout == LAYOUT_TYPES.HORIZONTAL ? 'formgrid grid ' : 'card ');
+    if (this.container) {
+      if (this.container.classNames)
+        result += this.container.classNames;
+    }
+    return result;
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.formGroup) {
@@ -76,7 +84,7 @@ export class DynamicFormComponent {
   }
   ngOnInit() {
     if (this.formName) {
-      this.api.getFormDefinition(this.formName).then(value => { console.log("QQ" + value); this.init(value); });
+      this.api.getFormDefinition(this.formName).then(value => { this.init(value); });
     }
   };
 

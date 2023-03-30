@@ -8,6 +8,16 @@ import { ExternalHtmlComponent } from './components/external-html/external-html.
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
 import { InputFieldComponent } from './components/input-field/input-field.component';
+import { CalendarModule } from 'primeng/calendar';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { InputMaskModule } from 'primeng/inputmask';
+import { DynamicContainerComponent } from './components/dynamic-container/dynamic-container.component';
+import { PasswordModule } from 'primeng/password';
+import { CheckboxModule } from 'primeng/checkbox';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
@@ -15,12 +25,22 @@ import { InputFieldComponent } from './components/input-field/input-field.compon
     ExternalHtmlComponent,
     MainPageComponent,
     DynamicFormComponent,
-    InputFieldComponent
+    InputFieldComponent,
+    DynamicContainerComponent
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
+    BrowserAnimationsModule,
+    CalendarModule,
+    CheckboxModule,
+    DropdownModule,
     HttpClientModule,
-    AppRoutingModule
+    InputMaskModule, 
+    InputNumberModule,
+    InputTextModule,
+    PasswordModule,
+    RadioButtonModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

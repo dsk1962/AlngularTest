@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { IInputField, IWidget, LABEL_POSITION, WIDGET_SUB_TYPES } from '../../model/i-widget';
+import { CalendarModule } from 'primeng/calendar';
+
 
 @Component({
   selector: 'dynamic-input-field',
@@ -9,25 +11,39 @@ import { IInputField, IWidget, LABEL_POSITION, WIDGET_SUB_TYPES } from '../../mo
 export class InputFieldComponent {
   @Input() inputWidget?: IWidget;
   public inputField?: IInputField;
+  WSUBTYPES = WIDGET_SUB_TYPES;
 
   getInputClassName(): string {
     return 'dif-input';
   }
 
   getClassName(): string {
-    let result = '';
+    let result = 'p-component field dynamic-field ';
     if (this.inputField) {
       if (this.inputField.classNames)
         result += this.inputField.classNames;
-      result += this.inputField.labelPosition == LABEL_POSITION.TOP ? ' dif-label-top' : ' dif-label-left';
+        result += (this.inputField.config?.labelPosition == LABEL_POSITION.TOP ? ' labeltop' : ' grid');
     }
     return result;
   }
+
   getLabelClassName(): string {
     return 'dif-label';
   }
 
-    ngOnInit() {
+  getControlName(): string {
+    if (this.inputField?.name) return this.inputField.name;
+    if (this.inputField?.id) return this.inputField.id.toString();
+    return '';
+  }
+
+  getPlaceholder(): string {
+    if (this.inputField?.placeholder) return this.inputField?.placeholder;
+    if (this.inputField?.mask) return this.inputField?.mask;
+    return '';
+  }
+
+  ngOnInit() {
     this.inputField = this.inputWidget as IInputField;
   }
 

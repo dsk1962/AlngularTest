@@ -1,5 +1,8 @@
 <div *ngIf="container" class="{{getClassName()}}" [style]="container.style">
 
+    <ng-container *ngIf="container.html">
+        <div class="external-html"  [innerHtml]="html"></div>
+    </ng-container>
     <ng-container *ngFor="let widget of container.children; let i = index" [ngSwitch]="widget.type">
         <ng-container *ngSwitchCase="WTYPES.INPUTFIELD">
             <dynamic-input-field [inputWidget]="widget"></dynamic-input-field>

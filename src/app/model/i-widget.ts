@@ -12,18 +12,21 @@ export interface IWidget {
 
 export interface IContainer extends IWidget{
     layout? : string,
+    html? : string,
     children? : IWidget[]
 }
 
 export interface IInputField extends IWidget{
-    labelPosition: string,
     isRequired?: boolean;
     maxLength?: number | null;
     minLength?: number | null;
-    minValue?: number | null;
-    maxValue?: number | null;
+    minValue?: number | string | Date;
+    maxValue?: number | string | Date;
+    mask?: string;
+    placeholder?: string;
     pattern?: RegExp | string;
     value?: string | number | null | Date | boolean;
+    config?:any;
     /**
      * The field 'initValue' is used only on UI side 
      */
@@ -42,17 +45,26 @@ export enum WIDGET_TYPES {
 
 export enum WIDGET_SUB_TYPES {
     // backend supported type(input fields)
-    TEXT = 'text',
-    TEXTAREA = 'textarea',
+    CHECKBOX = 'checkbox',
     COMBOBOX = 'combo',
     DATE = 'date',
+    MASK = 'mask',
     NUMERIC = 'numeric',
+    PASSWORD = 'password',
+    TEXT = 'text',
+    TEXTAREA = 'textarea',
     // backend supported type(others)
-    IMAGE = 'image'
+    IMAGE = 'image',
 }
 
 export enum LABEL_POSITION {
     // backend supported type(input fields)
     LEFT = 'left',
-    TOP = 'top',
+    TOP = 'top'
+}
+
+export enum LAYOUT_TYPES {
+    // backend supported type(input fields)
+    VERTICAL = 'vertical',
+    HORIZONTAL = 'horizontal'
 }

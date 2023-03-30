@@ -1,1 +1,37 @@
 /* You can add global styles to this file, and also import other style files */
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+
+dynamic-container{
+    display: inherit;
+    flex:1;
+}
+p-calendar{
+    display: inherit;
+    flex:1;
+}
+p-inputnumber{
+    display: inherit;
+    flex:1;
+}
+p-password{
+    display: inherit;
+    flex:1;
+}
+dynamic-form{
+    display: inherit;
+    flex:1;
+}
+dynamic-form  .p-calendar{
+    flex:1;
+}
+dynamic-form  .p-password{
+    flex:1;
+}
+dynamic-form  .p-inputtext{
+    flex:1;
+}
+dynamic-form  .p-inputnumber{
+    flex:1;
+}

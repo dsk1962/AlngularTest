@@ -1,21 +1,20 @@
-.dif-label-top{
-    display:flex;
-    flex-direction: column;
-    padding:4px;
-}
-.dif-input{
-    flex:1;
-    margin-left:4px;
-}
 .dif-label{
-    width:100px;
+    width:130px;
 }
 .dif-label-required{
     color:red;
 }
-.dif-label-left{
-    padding:4px;
+.dynamic-field.labeltop{
     display:flex;
-    flex-direction: row;
+    flex-direction: column;
 }
-
+.dynamic-field > textarea{
+    flex: 1;
+}
+.dynamic-field.grid{
+    margin-left: 0px;
+    margin-right: 0px;
+}
+.dif-label-required{
+    margin-left: 4px;
+}
