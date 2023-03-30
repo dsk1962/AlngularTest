@@ -5,6 +5,7 @@
 
 dynamic-container{
     display: inherit;
+    justify-content: inherit;
     flex:1;
 }
 p-calendar{
@@ -21,6 +22,7 @@ p-password{
 }
 dynamic-form{
     display: inherit;
+    justify-content: inherit;
     flex:1;
 }
 dynamic-form  .p-calendar{
