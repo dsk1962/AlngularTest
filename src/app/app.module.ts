@@ -18,6 +18,10 @@ import { PasswordModule } from 'primeng/password';
 import { CheckboxModule } from 'primeng/checkbox';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { DropdownModule } from 'primeng/dropdown';
+import { ButtonModule } from 'primeng/button';
+import { DynamicButtonComponent } from './components/dynamic-button/dynamic-button.component';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,21 +30,25 @@ import { DropdownModule } from 'primeng/dropdown';
     MainPageComponent,
     DynamicFormComponent,
     InputFieldComponent,
-    DynamicContainerComponent
+    DynamicContainerComponent,
+    DynamicButtonComponent
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
+    ButtonModule,
     CalendarModule,
     CheckboxModule,
     DropdownModule,
+    FormsModule,
     HttpClientModule,
     InputMaskModule, 
     InputNumberModule,
     InputTextModule,
     PasswordModule,
-    RadioButtonModule
+    RadioButtonModule,
+    ReactiveFormsModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

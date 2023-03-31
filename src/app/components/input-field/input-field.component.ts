@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { IInputField, IWidget, LABEL_POSITION, WIDGET_SUB_TYPES } from '../../model/i-widget';
+import { Helper } from '../../shared/helper';
+import { FormGroup } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 
 
@@ -9,9 +11,11 @@ import { CalendarModule } from 'primeng/calendar';
   styleUrls: ['./input-field.component.scss']
 })
 export class InputFieldComponent {
+  @Input() dynamicFormGroup?: FormGroup;
   @Input() inputWidget?: IWidget;
   public inputField?: IInputField;
   WSUBTYPES = WIDGET_SUB_TYPES;
+  HELPER = Helper;
 
   getInputClassName(): string {
     return 'dif-input';
@@ -29,12 +33,6 @@ export class InputFieldComponent {
 
   getLabelClassName(): string {
     return 'dif-label';
-  }
-
-  getControlName(): string {
-    if (this.inputField?.name) return this.inputField.name;
-    if (this.inputField?.id) return this.inputField.id.toString();
-    return '';
   }
 
   getPlaceholder(): string {

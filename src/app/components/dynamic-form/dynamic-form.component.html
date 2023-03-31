@@ -1,11 +1,14 @@
-<div *ngIf="container" class="{{getClassName()}}" [style]="container.style">
+<div *ngIf="container && dynamicFormGroup" class="{{getClassName()}}" [style]="container.style" [formGroup]="dynamicFormGroup">
 
     <ng-container *ngFor="let widget of container.children; let i = index" [ngSwitch]="widget.type">
         <ng-container *ngSwitchCase="WTYPES.INPUTFIELD">
-            <dynamic-input-field [inputWidget]="widget"></dynamic-input-field>
+            <dynamic-input-field [inputWidget]="widget" [dynamicFormGroup]="dynamicFormGroup"></dynamic-input-field>
         </ng-container>
         <ng-container *ngSwitchCase="WTYPES.CONTAINER">
-            <dynamic-container [inputWidget]="widget"></dynamic-container>
+            <dynamic-container [inputWidget]="widget"  [dynamicFormGroup]="dynamicFormGroup"></dynamic-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="WTYPES.BUTTON">
+            <dynamic-button [iWidget]="widget"> </dynamic-button>
         </ng-container>
     </ng-container>
 </div>

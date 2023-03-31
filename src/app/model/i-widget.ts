@@ -8,12 +8,16 @@ export interface IWidget {
     style?: string,
     classNames? : string,
     subType? : string
+    config?:any;
 }
 
 export interface IContainer extends IWidget{
     layout? : string,
     html? : string,
     children? : IWidget[]
+}
+
+export interface IButton extends IWidget{
 }
 
 export interface IInputField extends IWidget{
@@ -26,7 +30,6 @@ export interface IInputField extends IWidget{
     placeholder?: string;
     pattern?: RegExp | string;
     value?: string | number | null | Date | boolean;
-    config?:any;
     /**
      * The field 'initValue' is used only on UI side 
      */
@@ -40,6 +43,7 @@ export enum WIDGET_TYPES {
     // backend supported type
     CONTAINER = 'container',
     INPUTFIELD = 'inputfield',
+    BUTTON = 'button',
     OTHER = 'otherfield'
 }
 

@@ -8,15 +8,19 @@ dynamic-container{
     justify-content: inherit;
     flex:1;
 }
-p-calendar{
+dynamic-form p-calendar{
     display: inherit;
     flex:1;
 }
-p-inputnumber{
+dynamic-form p-inputnumber{
     display: inherit;
     flex:1;
 }
-p-password{
+dynamic-form p-inputmask{
+    display: inherit;
+    flex:1;
+}
+dynamic-form p-password{
     display: inherit;
     flex:1;
 }
@@ -25,7 +29,10 @@ dynamic-form{
     justify-content: inherit;
     flex:1;
 }
-dynamic-form  .p-calendar{
+dynamic-form .p-calendar{
+    flex:1;
+}
+dynamic-form .p-inputmask{
     flex:1;
 }
 dynamic-form  .p-password{

@@ -9,6 +9,7 @@ import { FormGroup, FormControl, AbstractControl, ValidatorFn } from '@angular/f
   styleUrls: ['./dynamic-container.component.scss']
 })
 export class DynamicContainerComponent {
+  @Input() dynamicFormGroup?: FormGroup;
   @Input() container?: IContainer;
   @Input() inputWidget?: IWidget;
   WTYPES = WIDGET_TYPES;
@@ -17,7 +18,7 @@ export class DynamicContainerComponent {
   constructor(private sanitizer: DomSanitizer) { }
 
   getClassName(): string {
-    let result = 'dynamic-container ' + (this.container?.layout == LAYOUT_TYPES.HORIZONTAL ? 'formgrid grid ' : 'card ');
+    let result = 'dynamic-container ' + (this.container?.layout == LAYOUT_TYPES.HORIZONTAL ? 'formgrid grid ' : 'vlayout ');
     if (this.container) {
       if (this.container.classNames)
         result += this.container.classNames;
