@@ -1,4 +1,4 @@
-<div *ngIf="container && dynamicFormGroup" class="{{getClassName()}}" [style]="container.style" [formGroup]="dynamicFormGroup">
+<form *ngIf="container && dynamicFormGroup" class="{{getClassName()}}" [style]="container.style" [formGroup]="dynamicFormGroup" (ngSubmit)="onSubmit()">
 
     <ng-container *ngFor="let widget of container.children; let i = index" [ngSwitch]="widget.type">
         <ng-container *ngSwitchCase="WTYPES.INPUTFIELD">
@@ -8,7 +8,7 @@
             <dynamic-container [inputWidget]="widget"  [dynamicFormGroup]="dynamicFormGroup"></dynamic-container>
         </ng-container>
         <ng-container *ngSwitchCase="WTYPES.BUTTON">
-            <dynamic-button [iWidget]="widget"> </dynamic-button>
+            <dynamic-button [iWidget]="widget" [formGroup]="dynamicFormGroup"> </dynamic-button>
         </ng-container>
     </ng-container>
-</div>
+</form>

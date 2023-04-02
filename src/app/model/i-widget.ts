@@ -18,6 +18,7 @@ export interface IContainer extends IWidget{
 }
 
 export interface IButton extends IWidget{
+    buttonType?:string;
 }
 
 export interface IInputField extends IWidget{

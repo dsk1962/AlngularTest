@@ -17,10 +17,6 @@ export class InputFieldComponent {
   WSUBTYPES = WIDGET_SUB_TYPES;
   HELPER = Helper;
 
-  getInputClassName(): string {
-    return 'dif-input';
-  }
-
   getClassName(): string {
     let result = 'p-component field dynamic-field ';
     if (this.inputField) {

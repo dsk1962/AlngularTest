@@ -2,6 +2,7 @@ import { Component, Input, SimpleChanges } from '@angular/core';
 import { Calendar } from 'primeng/calendar';
 import { IWidget, WIDGET_TYPES, LAYOUT_TYPES, IInputField, IContainer } from '../../model/i-widget';
 import { Helper } from '../../shared/helper';
+import { BaseWidget } from '../../shared/base-widget';
 import { FormGroup, FormControl, FormBuilder, AbstractControl, ValidatorFn } from '@angular/forms';
 import { DynamicFormServiceService } from '../../services/dynamic-form-service.service';
 
@@ -10,7 +11,7 @@ import { DynamicFormServiceService } from '../../services/dynamic-form-service.s
   templateUrl: './dynamic-form.component.html',
   styleUrls: ['./dynamic-form.component.scss']
 })
-export class DynamicFormComponent {
+export class DynamicFormComponent extends BaseWidget{
   @Input() dynamicFormGroup?: FormGroup;
   @Input() container?: IContainer;
   @Input() widgets?: IWidget[];
@@ -18,7 +19,7 @@ export class DynamicFormComponent {
   WTYPES = WIDGET_TYPES;
 
   constructor(private api: DynamicFormServiceService, private formBuilder: FormBuilder
-  ) { }
+  ) { super();}
 
   getField(id: string): AbstractControl | null | undefined {
     return this.dynamicFormGroup?.get(id.toString());
@@ -64,14 +65,6 @@ export class DynamicFormComponent {
   //     this.getField(id)?.patchValue(value, options);
   // }
 
-  getClassName(): string {
-    let result = 'dynamic-container dynamic-form ' + (this.container?.layout == LAYOUT_TYPES.HORIZONTAL ? 'formgrid grid ' : 'vlayout ');
-    if (this.container) {
-      if (this.container.classNames)
-        result += this.container.classNames;
-    }
-    return result;
-  }
 
   ngOnInit() {
     if (!this.dynamicFormGroup)
@@ -79,10 +72,13 @@ export class DynamicFormComponent {
     if (this.formName) {
       this.api.getFormDefinition(this.formName).then(value => { this.init(value); });
     }
+    this.widgetDefinition = this.container;
     this.dynamicFormGroup.valueChanges.subscribe(selectedValue  => {
-      console.log('address changed')
-      console.log(selectedValue)
     })
-  };
+  }
+  onSubmit() {
+    // TODO: Use EventEmitter with form value
+    console.warn(this.dynamicFormGroup?.value);
+  }
 
 }

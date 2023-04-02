@@ -5,8 +5,8 @@
 
 dynamic-container{
     display: inherit;
+    flex: inherit;
     justify-content: inherit;
-    flex:1;
 }
 dynamic-form p-calendar{
     display: inherit;
@@ -44,3 +44,20 @@ dynamic-form  .p-inputtext{
 dynamic-form  .p-inputnumber{
     flex:1;
 }
+.dynamic-container{
+    padding: 5px;
+}
+.dynamic-container.vlayout{
+    display:flex;
+    flex-direction: column;
+    flex:1;
+}
+.dynamic-container.hlayout{
+    display:flex;
+    flex-direction: row;
+    flex:1;
+}
+.dynamic-container.blayout{
+    display:block;
+}
+

@@ -16,7 +16,7 @@ export class ExternalHtmlComponent {
 
   ngOnInit() {
     if (this.externalName)
-      this.api.getResource(this.externalName).then(value => {this.htmlText = this.sanitizer.bypassSecurityTrustHtml(value);console.log(this.htmlText)});
+      this.api.getResource(this.externalName).then(value => this.htmlText = this.sanitizer.bypassSecurityTrustHtml(value));
   };
 
 }

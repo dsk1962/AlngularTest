@@ -6,26 +6,26 @@
         </span>
     </label>
     <ng-container *ngSwitchCase="WSUBTYPES.CHECKBOX">
-        <p-checkbox [formControlName]="HELPER.getControlName(inputField)"></p-checkbox>
+        <p-checkbox class="{{getClassName()}}" [formControlName]="HELPER.getControlName(inputField)"></p-checkbox>
     </ng-container>
     <ng-container *ngSwitchCase="WSUBTYPES.DATE">
-        <p-calendar [showIcon]="true" [formControlName]="HELPER.getControlName(inputField)" placeholder="{{getPlaceholder()}}"></p-calendar>
+        <p-calendar class="{{getClassName()}}" [showIcon]="true" [formControlName]="HELPER.getControlName(inputField)" placeholder="{{getPlaceholder()}}"></p-calendar>
     </ng-container>
     <ng-container *ngSwitchCase="WSUBTYPES.MASK">
         <p-inputMask [mask]="inputField.mask ? inputField.mask:'*'" placeholder="{{getPlaceholder()}}"
-            class="{{getInputClassName()}}" [formControlName]="HELPER.getControlName(inputField)"></p-inputMask>
+            class="{{getClassName()}}" [formControlName]="HELPER.getControlName(inputField)"></p-inputMask>
     </ng-container>
     <ng-container *ngSwitchCase="WSUBTYPES.NUMERIC">
-        <p-inputNumber [showButtons]="true" [formControlName]="HELPER.getControlName(inputField)" placeholder="{{getPlaceholder()}}"></p-inputNumber>
+        <p-inputNumber class="{{getClassName()}}" [showButtons]="true" [formControlName]="HELPER.getControlName(inputField)" placeholder="{{getPlaceholder()}}"></p-inputNumber>
     </ng-container>
     <ng-container *ngSwitchCase="WSUBTYPES.PASSWORD">
-        <p-password placeholder="{{getPlaceholder()}}" class="{{getInputClassName()}}" [toggleMask]="true" [formControlName]="HELPER.getControlName(inputField)"></p-password>
+        <p-password class="{{getClassName()}}" placeholder="{{getPlaceholder()}}" class="{{getClassName()}}" [toggleMask]="true" [formControlName]="HELPER.getControlName(inputField)"></p-password>
     </ng-container>
     <ng-container *ngSwitchCase="WSUBTYPES.TEXTAREA">
-        <textarea [rows]="inputField.config?.rows ? inputField.config?.rows : ''" pInputTextarea placeholder="{{getPlaceholder()}}" [formControlName]="HELPER.getControlName(inputField)"></textarea>
+        <textarea class="{{getClassName()}}" [rows]="inputField.config?.rows ? inputField.config?.rows : ''" pInputTextarea placeholder="{{getPlaceholder()}}" [formControlName]="HELPER.getControlName(inputField)"></textarea>
     </ng-container>
     <ng-container *ngSwitchDefault>
-        <input class="{{getInputClassName()}}" pInputText type="text" [id]="inputField.id"
+        <input class="{{getClassName()}}" pInputText type="text" [id]="inputField.id"
             placeholder="{{getPlaceholder()}}" [formControlName]="HELPER.getControlName(inputField)">
     </ng-container>
 </div>
