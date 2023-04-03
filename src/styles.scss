@@ -24,6 +24,10 @@ dynamic-form p-password{
     display: inherit;
     flex:1;
 }
+dynamic-form p-dropdown{
+    display: inherit;
+    flex:1;
+}
 dynamic-form{
     display: inherit;
     justify-content: inherit;
@@ -33,6 +37,9 @@ dynamic-form .p-calendar{
     flex:1;
 }
 dynamic-form .p-inputmask{
+    flex:1;
+}
+dynamic-form .p-dropdown{
     flex:1;
 }
 dynamic-form  .p-password{

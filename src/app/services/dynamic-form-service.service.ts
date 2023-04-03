@@ -37,4 +37,8 @@ export class DynamicFormServiceService {
     return lastValueFrom(this.http.get<IContainer>(
       endpoint + 'forms/' + formName));
   }
+  getOptions(listName: string): Promise<[]> {
+    return lastValueFrom(this.http.get<[]>(
+      endpoint + 'options/' + listName));
+  }
 }

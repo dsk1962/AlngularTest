@@ -23,13 +23,7 @@ export interface IButton extends IWidget{
 
 export interface IInputField extends IWidget{
     isRequired?: boolean;
-    maxLength?: number | null;
-    minLength?: number | null;
-    minValue?: number | string | Date;
-    maxValue?: number | string | Date;
-    mask?: string;
     placeholder?: string;
-    pattern?: RegExp | string;
     value?: string | number | null | Date | boolean;
     /**
      * The field 'initValue' is used only on UI side 
@@ -37,6 +31,32 @@ export interface IInputField extends IWidget{
     initValue?: string | number | null | Date | boolean;
     validators?: ValidatorFn[]
 }
+
+export interface ITextField extends IInputField{
+    maxLength?: number | null;
+    minLength?: number | null;
+    minValue?: string;
+    maxValue?: string;
+    mask?: string;
+    pattern?: RegExp | string;
+}
+
+export interface INumericField extends IInputField{
+    minValue?: number| string;
+    maxValue?: number| string;
+}
+export interface IComboboxField extends IInputField{
+    options?: [];
+    optionLabel?: string;
+    optionValue?: string;
+    listName?: string;
+}
+
+export interface IDateField extends IInputField{
+    minValue?: string | Date;
+    maxValue?: string | Date;
+}
+
 export interface IOther {
 }
 
@@ -51,7 +71,7 @@ export enum WIDGET_TYPES {
 export enum WIDGET_SUB_TYPES {
     // backend supported type(input fields)
     CHECKBOX = 'checkbox',
-    COMBOBOX = 'combo',
+    COMBOBOX = 'combobox',
     DATE = 'date',
     MASK = 'mask',
     NUMERIC = 'numeric',

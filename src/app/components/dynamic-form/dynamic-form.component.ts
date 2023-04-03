@@ -1,5 +1,6 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { Calendar } from 'primeng/calendar';
+import { Dropdown } from 'primeng/dropdown';
 import { IWidget, WIDGET_TYPES, LAYOUT_TYPES, IInputField, IContainer } from '../../model/i-widget';
 import { Helper } from '../../shared/helper';
 import { BaseWidget } from '../../shared/base-widget';
@@ -38,6 +39,7 @@ export class DynamicFormComponent extends BaseWidget{
   init(container: IContainer) {
     this.container = container;
     this.addField(container);
+    this.setInitValue(this.container);
   }
 
   addField(widget: IWidget): void {
@@ -53,6 +55,27 @@ export class DynamicFormComponent extends BaseWidget{
     }
   }
 
+  private setInitValue(widget?: IWidget): void {
+    if (widget?.type === WIDGET_TYPES.INPUTFIELD) {
+      let field = widget as IInputField;
+      //        const validators: ValidatorFn[] = Helper.getValidatorsFn(field, VALIDATORS);
+      if (field.initValue ) {
+        let value: boolean | string | Date = field.initValue.toString();
+        if (typeof field.initValue === 'boolean' || field.initValue instanceof Date) {
+            value = field.initValue;
+        }
+        this.patchValue(Helper.getControlName(widget), value);
+      }
+    }
+    if (widget?.type === WIDGET_TYPES.CONTAINER) {
+      (widget as IContainer).children?.forEach(entry => this.setInitValue(entry));
+    }
+    /**
+    * This setTimeout is needed to apply Rules after initialization of the fields
+    */
+    setTimeout(()=> this.dynamicFormGroup?.updateValueAndValidity());
+}
+
   // patchValues(ids: string[], values: string[], options: object[] = []): void {
   //     for (let i = 0; i < ids.length; i++) {
   //         if (ids[i] && values[i] !== undefined) {
@@ -61,9 +84,20 @@ export class DynamicFormComponent extends BaseWidget{
   //     }
   // }
 
-  // patchValue(id: string, value: object | string | number | boolean | null, options: object = {}): void {
-  //     this.getField(id)?.patchValue(value, options);
-  // }
+  patchValue(id: string, value: object | string | number | boolean | null, options: object = {}): void {
+       this.getField(id)?.patchValue(value, options);
+   }
+
+   ngOnChanges(changes: SimpleChanges): void {
+    if ( this.dynamicFormGroup) {
+        //
+        // We should set dirty false by hands if form doesn't contain controls. 
+        // It may be set to true somewhere in a past
+        //
+        this.dynamicFormGroup.markAsPristine();
+        this.setInitValue(this.container);
+    }
+}
 
 
   ngOnInit() {
