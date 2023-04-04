@@ -4,7 +4,7 @@ import { Dropdown } from 'primeng/dropdown';
 import { IWidget, WIDGET_TYPES, LAYOUT_TYPES, IInputField, IContainer } from '../../model/i-widget';
 import { Helper } from '../../shared/helper';
 import { BaseWidget } from '../../shared/base-widget';
-import { FormGroup, FormControl, FormBuilder, AbstractControl, ValidatorFn } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { DynamicFormServiceService } from '../../services/dynamic-form-service.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { DynamicFormServiceService } from '../../services/dynamic-form-service.s
   templateUrl: './dynamic-form.component.html',
   styleUrls: ['./dynamic-form.component.scss']
 })
-export class DynamicFormComponent extends BaseWidget{
+export class DynamicFormComponent extends BaseWidget {
   @Input() dynamicFormGroup?: FormGroup;
   @Input() container?: IContainer;
   @Input() widgets?: IWidget[];
@@ -20,7 +20,7 @@ export class DynamicFormComponent extends BaseWidget{
   WTYPES = WIDGET_TYPES;
 
   constructor(private api: DynamicFormServiceService, private formBuilder: FormBuilder
-  ) { super();}
+  ) { super(); }
 
   getField(id: string): AbstractControl | null | undefined {
     return this.dynamicFormGroup?.get(id.toString());
@@ -45,10 +45,10 @@ export class DynamicFormComponent extends BaseWidget{
   addField(widget: IWidget): void {
     if (widget.type === WIDGET_TYPES.INPUTFIELD) {
       let field = widget as IInputField;
-      //        const validators: ValidatorFn[] = Helper.getValidatorsFn(field, VALIDATORS);
-      const id: string = field.id.toString();
+      const validators = Helper.getValidatorsFn(field);
       this.dynamicFormGroup?.addControl(Helper.getControlName(widget), new FormControl(''));
-      //        Helper.setValidator(this.group?.get(id), validators);}
+      let control = this.getField(Helper.getControlName(widget));
+      control && Helper.setValidator(control, validators);
     }
     if (widget.type === WIDGET_TYPES.CONTAINER) {
       (widget as IContainer).children?.forEach(entry => this.addField(entry));
@@ -58,14 +58,12 @@ export class DynamicFormComponent extends BaseWidget{
   private setInitValue(widget?: IWidget): void {
     if (widget?.type === WIDGET_TYPES.INPUTFIELD) {
       let field = widget as IInputField;
-      //        const validators: ValidatorFn[] = Helper.getValidatorsFn(field, VALIDATORS);
-      if (field.initValue ) {
-        let value: boolean | string | Date = field.initValue.toString();
-        if (typeof field.initValue === 'boolean' || field.initValue instanceof Date) {
-            value = field.initValue;
-        }
-        this.patchValue(Helper.getControlName(widget), value);
-      }
+      let value = field.initValue ? field.initValue : null;
+      let contol = this.getField(Helper.getControlName(widget));
+      contol?.setValue(value);
+      contol?.updateValueAndValidity();
+      if (contol?.valid === false)
+        contol?.markAsDirty();
     }
     if (widget?.type === WIDGET_TYPES.CONTAINER) {
       (widget as IContainer).children?.forEach(entry => this.setInitValue(entry));
@@ -73,8 +71,8 @@ export class DynamicFormComponent extends BaseWidget{
     /**
     * This setTimeout is needed to apply Rules after initialization of the fields
     */
-    setTimeout(()=> this.dynamicFormGroup?.updateValueAndValidity());
-}
+    setTimeout(() => this.dynamicFormGroup?.updateValueAndValidity());
+  }
 
   // patchValues(ids: string[], values: string[], options: object[] = []): void {
   //     for (let i = 0; i < ids.length; i++) {
@@ -84,20 +82,17 @@ export class DynamicFormComponent extends BaseWidget{
   //     }
   // }
 
-  patchValue(id: string, value: object | string | number | boolean | null, options: object = {}): void {
-       this.getField(id)?.patchValue(value, options);
-   }
 
-   ngOnChanges(changes: SimpleChanges): void {
-    if ( this.dynamicFormGroup) {
-        //
-        // We should set dirty false by hands if form doesn't contain controls. 
-        // It may be set to true somewhere in a past
-        //
-        this.dynamicFormGroup.markAsPristine();
-        this.setInitValue(this.container);
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.dynamicFormGroup) {
+      //
+      // We should set dirty false by hands if form doesn't contain controls. 
+      // It may be set to true somewhere in a past
+      //
+      //this.dynamicFormGroup.markAsPristine();
+      //this.setInitValue(this.container);
     }
-}
+  }
 
 
   ngOnInit() {
@@ -107,12 +102,16 @@ export class DynamicFormComponent extends BaseWidget{
       this.api.getFormDefinition(this.formName).then(value => { this.init(value); });
     }
     this.widgetDefinition = this.container;
-    this.dynamicFormGroup.valueChanges.subscribe(selectedValue  => {
+    this.dynamicFormGroup.valueChanges.subscribe(selectedValue => {
+      console.log(selectedValue);
     })
   }
+
   onSubmit() {
     // TODO: Use EventEmitter with form value
     console.warn(this.dynamicFormGroup?.value);
+    this.getField('phoneNumber')?.setValue("");
+    this.getField('phoneNumber')?.markAsDirty();
   }
 
 }

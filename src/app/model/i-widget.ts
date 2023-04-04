@@ -35,8 +35,6 @@ export interface IInputField extends IWidget{
 export interface ITextField extends IInputField{
     maxLength?: number | null;
     minLength?: number | null;
-    minValue?: string;
-    maxValue?: string;
     mask?: string;
     pattern?: RegExp | string;
 }
