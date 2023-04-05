@@ -5,7 +5,7 @@ import { FormGroup, FormControl, AbstractControl, ValidatorFn } from '@angular/f
 import { BaseWidget } from '../../shared/base-widget';
 
 @Component({
-  selector: 'dynamic-container',
+  selector: 'div[dynamic-container]',
   templateUrl: './dynamic-container.component.html',
   styleUrls: ['./dynamic-container.component.scss']
 })
@@ -14,15 +14,13 @@ export class DynamicContainerComponent extends BaseWidget {
   @Input() container?: IContainer;
   @Input() inputWidget?: IWidget;
   WTYPES = WIDGET_TYPES;
-  html?: SafeHtml;
 
-  constructor(private sanitizer: DomSanitizer) { super(); }
-
+  constructor(sanitizer :DomSanitizer){
+    super(sanitizer);
+  }
 
   ngOnInit() {
     this.container = this.inputWidget as IContainer;
     this.widgetDefinition = this.inputWidget;
-    if (this.container?.html)
-      this.html = this.sanitizer.bypassSecurityTrustHtml(this.container?.html);
   };
 }

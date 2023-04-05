@@ -4,6 +4,8 @@ import { Helper } from '../../shared/helper';
 import { FormGroup } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { DynamicFormServiceService } from '../../services/dynamic-form-service.service';
+import { BaseWidget } from '../../shared/base-widget';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @Component({
@@ -11,26 +13,36 @@ import { DynamicFormServiceService } from '../../services/dynamic-form-service.s
   templateUrl: './input-field.component.html',
   styleUrls: ['./input-field.component.scss']
 })
-export class InputFieldComponent {
+export class InputFieldComponent extends BaseWidget {
   @Input() dynamicFormGroup?: FormGroup;
   @Input() inputWidget?: IWidget;
   public inputField?: IInputField;
   WSUBTYPES = WIDGET_SUB_TYPES;
-  HELPER = Helper;
   @Input() options: [] = [];
 
-  constructor(private api: DynamicFormServiceService
-  ) { }
+  constructor(private api: DynamicFormServiceService, sanitizer: DomSanitizer) {
+    super(sanitizer);
+  }
 
 
-  getClassName(): string {
-    let result = 'p-component field dynamic-field ';
-    if (this.inputField) {
-      if (this.inputField.classNames)
-        result += this.inputField.classNames;
-      result += (this.inputField.config?.labelPosition == LABEL_POSITION.TOP ? ' labeltop' : ' grid');
-    }
-    return result;
+
+  getErrorList(errorObject: any) {
+    return errorObject ? Object.keys(errorObject) : [];
+  }
+
+  getError(errorObject: any): string {
+    let keys = Object.keys(errorObject);
+    if (keys.includes('required'))
+      return 'This field is required';
+    if (keys.includes('minlength'))
+      return 'Text length must be greater or equal  ' + (this.inputWidget as any)?.minLength + ' characters';
+    if (keys.includes('maxlength'))
+      return 'Text length must be less or equal  ' + (this.inputWidget as any)?.maxLength + ' characters';
+    if (keys.includes('min'))
+      return 'Value must be greater or equal  ' + (this.inputWidget as any)?.minValue;
+    if (keys.includes('max'))
+      return 'Value must be less or equal  ' + (this.inputWidget as any)?.maxValue;
+    return '';
   }
 
   getIInputField(): IInputField {
@@ -68,6 +80,7 @@ export class InputFieldComponent {
   ngOnInit() {
     if (this.inputWidget) {
       this.inputField = this.inputWidget as IInputField;
+      this.widgetDefinition = this.inputWidget;
       this.options = this.getOptions();
       if (this.inputField.subType == WIDGET_SUB_TYPES.COMBOBOX) {
         let c = this.inputField as IComboboxField;

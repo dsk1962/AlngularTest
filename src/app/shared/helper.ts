@@ -1,5 +1,7 @@
 import { AbstractControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { IWidget, IInputField } from '../model/i-widget';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
 export class Helper {
 
     static getControlName(iWidget: IWidget): string {
@@ -68,6 +70,7 @@ export class Helper {
     static validEmail(): ValidatorFn {
         return Validators.email;
     }
+
 
     static removeAllValidators(control: AbstractControl): void {
         if ((<any>control)?.validatorsList) {

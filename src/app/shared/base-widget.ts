@@ -1,15 +1,27 @@
 import { Input } from '@angular/core';
 import { WIDGET_TYPES, LAYOUT_TYPES, LABEL_POSITION } from '../model/i-widget';
+import { Helper } from '../shared/helper';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 
 export class BaseWidget {
-    widgetDefinition: any
+    widgetDefinition: any;
+    HELPER = Helper;
+
+    constructor(protected sanitizer: DomSanitizer) {
+    }
+
     public getClassName(): string {
+        return this.getWidgetClassName(this.widgetDefinition);
+    }
+    public getWidgetClassName(def: any): string {
+        if (!def)
+            def = this.widgetDefinition;
         let result = '';
-        switch (this.widgetDefinition?.type) {
+        switch (def?.type) {
             case WIDGET_TYPES.CONTAINER: {
                 result = 'dynamic-container '
-                switch (this.widgetDefinition?.layout) {
+                switch (def?.layout) {
                     case LAYOUT_TYPES.HORIZONTAL: {
                         result += 'hlayout '
                         break;
@@ -25,7 +37,7 @@ export class BaseWidget {
             }
             case WIDGET_TYPES.INPUTFIELD: {
                 result = 'p-component field dynamic-field ';
-                result += (this.widgetDefinition?.config?.labelPosition == LABEL_POSITION.TOP ? ' labeltop' : ' grid');
+                result += (def?.config?.labelPosition == LABEL_POSITION.TOP ? ' labeltop ' : ' grid ');
                 break;
             }
             case WIDGET_TYPES.BUTTON: {
@@ -33,8 +45,14 @@ export class BaseWidget {
                 break;
             }
         }
-        if (this.widgetDefinition?.classNames)
-            result += this.widgetDefinition.classNames;
+        if (def?.classNames)
+            result += def.classNames;
         return result;
+    }
+
+    public getHtml(def: any): SafeHtml | null {
+        if (def?.html)
+            return this.sanitizer.bypassSecurityTrustHtml(def?.html);
+        return null;
     }
 }

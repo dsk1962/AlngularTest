@@ -6,6 +6,7 @@ import { Helper } from '../../shared/helper';
 import { BaseWidget } from '../../shared/base-widget';
 import { FormGroup, FormControl, FormBuilder, AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { DynamicFormServiceService } from '../../services/dynamic-form-service.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'dynamic-form',
@@ -18,12 +19,12 @@ export class DynamicFormComponent extends BaseWidget {
   @Input() widgets?: IWidget[];
   @Input() formName?: string;
   WTYPES = WIDGET_TYPES;
-
-  constructor(private api: DynamicFormServiceService, private formBuilder: FormBuilder
-  ) { super(); }
-
+  
+  constructor(private api: DynamicFormServiceService, private formBuilder: FormBuilder, sanitizer: DomSanitizer) {
+    super(sanitizer);
+  }
   getField(id: string): AbstractControl | null | undefined {
-    return this.dynamicFormGroup?.get(id.toString());
+    return this.dynamicFormGroup?.get(id.toString()); 
   }
 
   getLabel(id: string): string | undefined {

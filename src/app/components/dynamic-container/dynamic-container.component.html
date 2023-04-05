@@ -1,17 +1,22 @@
-<div *ngIf="container && dynamicFormGroup" class="{{getClassName()}}" [style]="container.style" [formGroup]="dynamicFormGroup">
-
-    <ng-container *ngIf="container.html">
-        <div class="external-html" [innerHtml]="html"></div>
-    </ng-container>
+<ng-container *ngIf="container && dynamicFormGroup">
     <ng-container *ngFor="let widget of container.children; let i = index" [ngSwitch]="widget.type">
         <ng-container *ngSwitchCase="WTYPES.INPUTFIELD">
             <dynamic-input-field [inputWidget]="widget" [dynamicFormGroup]="dynamicFormGroup"></dynamic-input-field>
         </ng-container>
         <ng-container *ngSwitchCase="WTYPES.CONTAINER">
-            <dynamic-container [inputWidget]="widget" [dynamicFormGroup]="dynamicFormGroup"></dynamic-container>
+            <ng-container *ngIf="getHtml(widget); then thenBlock else elseBlock"></ng-container>
+            <ng-template #thenBlock>
+                <div dynamic-container 
+                    [innerHTML]="getHtml(widget)" class="{{getWidgetClassName(widget)}}" [style]="widget.style"
+                    [formGroup]="dynamicFormGroup"></div>
+            </ng-template>
+            <ng-template #elseBlock>
+                <div dynamic-container [inputWidget]="widget" [dynamicFormGroup]="dynamicFormGroup"
+                    class="{{getWidgetClassName(widget)}}" [style]="widget.style" [formGroup]="dynamicFormGroup"></div>
+            </ng-template>
         </ng-container>
         <ng-container *ngSwitchCase="WTYPES.BUTTON">
             <dynamic-button [iWidget]="widget"></dynamic-button>
         </ng-container>
     </ng-container>
-</div>
+</ng-container>

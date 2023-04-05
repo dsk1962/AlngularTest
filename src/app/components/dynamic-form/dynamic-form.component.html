@@ -5,7 +5,7 @@
             <dynamic-input-field [inputWidget]="widget" [dynamicFormGroup]="dynamicFormGroup"></dynamic-input-field>
         </ng-container>
         <ng-container *ngSwitchCase="WTYPES.CONTAINER">
-            <dynamic-container [inputWidget]="widget"  [dynamicFormGroup]="dynamicFormGroup"></dynamic-container>
+            <div dynamic-container [inputWidget]="widget" [dynamicFormGroup]="dynamicFormGroup" class="{{getWidgetClassName(widget)}}" [style]="widget.style" [formGroup]="dynamicFormGroup"></div>
         </ng-container>
         <ng-container *ngSwitchCase="WTYPES.BUTTON">
             <dynamic-button [iWidget]="widget" [formGroup]="dynamicFormGroup"> </dynamic-button>
