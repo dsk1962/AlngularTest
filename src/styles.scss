@@ -28,6 +28,7 @@ dynamic-form p-dropdown{
     display: inherit;
     flex:1;
 }
+
 dynamic-form{
     display: inherit;
     justify-content: inherit;
@@ -54,6 +55,9 @@ dynamic-form  .p-inputnumber{
 .dynamic-container{
     padding: 5px;
 }
+.dynamic-field{
+    margin: 3px 0px 3px 0px;
+}
 .dynamic-container.vlayout{
     display:flex;
     flex-direction: column;
@@ -68,3 +72,32 @@ dynamic-form  .p-inputnumber{
     display:block;
 }
 
+.dynamic-field .labelleft{
+    display:flex;
+    flex-direction: row;
+}
+.dif-label{
+    width:130px;
+}
+.dif-label-required{
+    color:red;
+}
+.dynamic-field .labeltop{
+    display:flex;
+    flex-direction: column;
+}
+.dynamic-field  textarea{
+    flex: 1;
+}
+.dynamic-field .labelleft{
+    display:flex;
+    flex-direction: row;
+}
+.dynamic-field .labelleft label{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.dif-label-required{
+    margin-left: 4px;
+}

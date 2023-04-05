@@ -9,7 +9,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 
 @Component({
-  selector: 'dynamic-input-field',
+  selector: 'div[dynamic-input-field]',
   templateUrl: './input-field.component.html',
   styleUrls: ['./input-field.component.scss']
 })
@@ -30,6 +30,9 @@ export class InputFieldComponent extends BaseWidget {
     return errorObject ? Object.keys(errorObject) : [];
   }
 
+  getWrapperClass():string{
+    return this.inputWidget?.config?.labelPosition == LABEL_POSITION.TOP ? ' labeltop ' : ' labelleft ';
+  }
   getError(errorObject: any): string {
     let keys = Object.keys(errorObject);
     if (keys.includes('required'))

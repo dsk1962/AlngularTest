@@ -36,8 +36,7 @@ export class BaseWidget {
                 break;
             }
             case WIDGET_TYPES.INPUTFIELD: {
-                result = 'p-component field dynamic-field ';
-                result += (def?.config?.labelPosition == LABEL_POSITION.TOP ? ' labeltop ' : ' grid ');
+                result = 'p-component dynamic-field ';
                 break;
             }
             case WIDGET_TYPES.BUTTON: {
