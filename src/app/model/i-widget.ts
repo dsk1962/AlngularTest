@@ -22,8 +22,10 @@ export interface IButton extends IWidget{
 }
 
 export interface IInputField extends IWidget{
-    isRequired?: boolean;
+    required?: boolean;
     placeholder?: string;
+    disabled: boolean;
+    readonly: boolean;
     value?: string | number | null | Date | boolean;
     /**
      * The field 'initValue' is used only on UI side 

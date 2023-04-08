@@ -12,7 +12,7 @@ export class Helper {
     static getValidatorsFn(field: IInputField): ValidatorFn[] {
         const validatorsFn: ValidatorFn[] = [];
         let f = field as any;
-        if (field.isRequired)
+        if (field.required)
             validatorsFn.push(Validators.required);
         if (typeof f.minLength !== 'undefined')
             validatorsFn.push(Validators.minLength(f.minLength));

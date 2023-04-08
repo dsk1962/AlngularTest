@@ -19,12 +19,11 @@ export class InputFieldComponent extends BaseWidget {
   public inputField?: IInputField;
   WSUBTYPES = WIDGET_SUB_TYPES;
   @Input() options: [] = [];
+   
 
   constructor(private api: DynamicFormServiceService, sanitizer: DomSanitizer) {
     super(sanitizer);
   }
-
-
 
   getErrorList(errorObject: any) {
     return errorObject ? Object.keys(errorObject) : [];

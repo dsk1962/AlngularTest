@@ -19,12 +19,12 @@ export class DynamicFormComponent extends BaseWidget {
   @Input() widgets?: IWidget[];
   @Input() formName?: string;
   WTYPES = WIDGET_TYPES;
-  
+
   constructor(private api: DynamicFormServiceService, private formBuilder: FormBuilder, sanitizer: DomSanitizer) {
     super(sanitizer);
   }
   getField(id: string): AbstractControl | null | undefined {
-    return this.dynamicFormGroup?.get(id.toString()); 
+    return this.dynamicFormGroup?.get(id.toString());
   }
 
   getLabel(id: string): string | undefined {
@@ -47,7 +47,7 @@ export class DynamicFormComponent extends BaseWidget {
     if (widget.type === WIDGET_TYPES.INPUTFIELD) {
       let field = widget as IInputField;
       const validators = Helper.getValidatorsFn(field);
-      this.dynamicFormGroup?.addControl(Helper.getControlName(widget), new FormControl(''));
+      this.dynamicFormGroup?.addControl(Helper.getControlName(widget), new FormControl());
       let control = this.getField(Helper.getControlName(widget));
       control && Helper.setValidator(control, validators);
     }
@@ -56,6 +56,9 @@ export class DynamicFormComponent extends BaseWidget {
     }
   }
 
+  private isDisabled(field: IInputField): boolean {
+    return !!field.disabled;
+  }
   private setInitValue(widget?: IWidget): void {
     if (widget?.type === WIDGET_TYPES.INPUTFIELD) {
       let field = widget as IInputField;
@@ -65,6 +68,7 @@ export class DynamicFormComponent extends BaseWidget {
       contol?.updateValueAndValidity();
       if (contol?.valid === false)
         contol?.markAsDirty();
+      if (this.isDisabled(field)) contol?.disable();
     }
     if (widget?.type === WIDGET_TYPES.CONTAINER) {
       (widget as IContainer).children?.forEach(entry => this.setInitValue(entry));
