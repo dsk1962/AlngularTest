@@ -4,7 +4,7 @@ import { Observable, throwError, lastValueFrom } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IContainer } from '../model/i-widget'
 
-const endpoint = 'http://localhost:8099/test/content/';
+const endpoint = 'http://localhost:8091/esignPOC/content/';
 @Injectable({
   providedIn: 'root'
 })
