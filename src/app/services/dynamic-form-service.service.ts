@@ -4,7 +4,7 @@ import { Observable, throwError, lastValueFrom } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IContainer } from '../model/i-widget'
 
-const endpoint = 'http://localhost:8091/esignPOC/content/';
+const endpoint = 'http://localhost:8091/esignPOC/';
 @Injectable({
   providedIn: 'root'
 })
@@ -30,12 +30,12 @@ export class DynamicFormServiceService {
       responseType: 'text'
     }
     return lastValueFrom(this.http.get<string>(
-      endpoint + name, requestOptions));
+      endpoint +'content/'+ name, requestOptions));
   }
 
   getFormDefinition(formName: string): Promise<IContainer> {
     return lastValueFrom(this.http.get<IContainer>(
-      endpoint + 'forms/' + formName));
+      endpoint + 'content/forms/' + formName));
   }
   getOptions(listName: string): Promise<[]> {
     return lastValueFrom(this.http.get<[]>(
