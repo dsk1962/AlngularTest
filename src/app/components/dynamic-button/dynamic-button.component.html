@@ -1,5 +1,5 @@
 <ng-container *ngIf="iButton">
     <p-button [label]="iButton.label ? iButton.label : 'Button'" [icon]="iButton.config?.icon"
         styleClass="{{getClassName()}}" [style]="iButton.style"
-        [type]="iButton.buttonType? iButton.buttonType:'submit'"></p-button>
+        [type]="iButton.buttonType? iButton.buttonType:'submit'" (click)="onClick()"></p-button>
 </ng-container>

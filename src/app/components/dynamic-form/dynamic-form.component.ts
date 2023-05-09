@@ -7,6 +7,7 @@ import { BaseWidget } from '../../shared/base-widget';
 import { FormGroup, FormControl, FormBuilder, AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { DynamicFormServiceService } from '../../services/dynamic-form-service.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ApplicationServiceService } from '../../services/application-service.service';
 
 @Component({
   selector: 'dynamic-form',
@@ -20,7 +21,7 @@ export class DynamicFormComponent extends BaseWidget {
   @Input() formName?: string;
   WTYPES = WIDGET_TYPES;
 
-  constructor(private api: DynamicFormServiceService, private formBuilder: FormBuilder, sanitizer: DomSanitizer) {
+  constructor(private api: DynamicFormServiceService, private formBuilder: FormBuilder, sanitizer: DomSanitizer, private applicationServiceService: ApplicationServiceService) {
     super(sanitizer);
   }
   getField(id: string): AbstractControl | null | undefined {
@@ -101,6 +102,12 @@ export class DynamicFormComponent extends BaseWidget {
 
 
   ngOnInit() {
+    this.applicationServiceService.formName.subscribe((name) => {
+      if (this.formName != name) {
+        this.formName = name;
+        this.ngOnInit();
+      }
+    })
     if (!this.dynamicFormGroup)
       this.dynamicFormGroup = this.formBuilder.group({})
     if (this.formName) {
@@ -118,5 +125,6 @@ export class DynamicFormComponent extends BaseWidget {
     this.getField('phoneNumber')?.setValue("");
     this.getField('phoneNumber')?.markAsDirty();
   }
+
 
 }

@@ -19,6 +19,7 @@ export interface IContainer extends IWidget{
 
 export interface IButton extends IWidget{
     buttonType?:string;
+    onclick?: IMethodCall;
 }
 
 export interface IInputField extends IWidget{
@@ -59,6 +60,13 @@ export interface IDateField extends IInputField{
 
 export interface IOther {
 }
+
+export interface IMethodCall{
+    member?: string;
+    method?: string;
+    params?: [];
+}
+
 
 export enum WIDGET_TYPES {
     // backend supported type

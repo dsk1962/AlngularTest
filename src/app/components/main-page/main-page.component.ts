@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { ApplicationServiceService } from '../../services/application-service.service';
 
 @Component({
   selector: 'main-page',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./main-page.component.scss']
 })
 export class MainPageComponent {
-
+  constructor(private applicationServiceService: ApplicationServiceService) { }
+  formName:string="startForm.json";
 }

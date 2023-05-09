@@ -1,5 +1,5 @@
 import { AbstractControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { IWidget, IInputField } from '../model/i-widget';
+import { IWidget, IInputField, IMethodCall } from '../model/i-widget';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 export class Helper {
@@ -69,6 +69,20 @@ export class Helper {
     }
     static validEmail(): ValidatorFn {
         return Validators.email;
+    }
+
+    static runMethod(obj: any, cfg: IMethodCall) {
+        if (cfg && cfg.method) {
+            var obj = cfg.member ? obj[cfg.member] : obj;
+            if (this.isFunction(obj[cfg.method]))
+                if (cfg.params)
+                    obj[cfg.method](...cfg.params);
+                else
+                    obj[cfg.method]();
+        }
+    }
+    static isFunction(functionToCheck: any) {
+        return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
     }
 
 

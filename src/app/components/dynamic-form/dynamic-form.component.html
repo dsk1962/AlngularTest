@@ -4,7 +4,16 @@
             <div dynamic-input-field [inputWidget]="widget" [dynamicFormGroup]="dynamicFormGroup" class="{{getWidgetClassName(widget)}}" [style]="widget.style"></div>
         </ng-container>
         <ng-container *ngSwitchCase="WTYPES.CONTAINER">
-            <div dynamic-container [inputWidget]="widget" [dynamicFormGroup]="dynamicFormGroup" class="{{getWidgetClassName(widget)}}" [style]="widget.style" [formGroup]="dynamicFormGroup"></div>
+            <ng-container *ngIf="getHtml(widget); then thenBlock else elseBlock"></ng-container>
+            <ng-template #thenBlock>
+                <div dynamic-container 
+                    [innerHTML]="getHtml(widget)" class="{{getWidgetClassName(widget)}}" [style]="widget.style"
+                    [formGroup]="dynamicFormGroup"></div>
+            </ng-template>
+            <ng-template #elseBlock>
+                <div dynamic-container [inputWidget]="widget" [dynamicFormGroup]="dynamicFormGroup"
+                    class="{{getWidgetClassName(widget)}}" [style]="widget.style" [formGroup]="dynamicFormGroup"></div>
+            </ng-template>
         </ng-container>
         <ng-container *ngSwitchCase="WTYPES.BUTTON">
             <dynamic-button [iWidget]="widget" [formGroup]="dynamicFormGroup"> </dynamic-button>

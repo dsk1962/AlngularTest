@@ -3,6 +3,8 @@ import { IWidget, WIDGET_TYPES, LAYOUT_TYPES, IInputField, IContainer } from '..
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { FormGroup, FormControl, AbstractControl, ValidatorFn } from '@angular/forms';
 import { BaseWidget } from '../../shared/base-widget';
+import { ApplicationServiceService } from '../../services/application-service.service';
+
 
 @Component({
   selector: 'div[dynamic-container]',
@@ -15,7 +17,7 @@ export class DynamicContainerComponent extends BaseWidget {
   @Input() inputWidget?: IWidget;
   WTYPES = WIDGET_TYPES;
 
-  constructor(sanitizer :DomSanitizer){
+  constructor(sanitizer :DomSanitizer,private applicationServiceService: ApplicationServiceService){
     super(sanitizer);
   }
 

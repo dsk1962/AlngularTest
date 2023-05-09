@@ -1,11 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { IInputField, ITextField, INumericField, IDateField, IWidget, LABEL_POSITION, WIDGET_SUB_TYPES, IComboboxField } from '../../model/i-widget';
+import { IInputField, ITextField, INumericField, IDateField, IWidget, LABEL_POSITION, WIDGET_SUB_TYPES, IComboboxField,IMethodCall } from '../../model/i-widget';
 import { Helper } from '../../shared/helper';
 import { FormGroup } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { DynamicFormServiceService } from '../../services/dynamic-form-service.service';
 import { BaseWidget } from '../../shared/base-widget';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ApplicationServiceService } from '../../services/application-service.service';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class InputFieldComponent extends BaseWidget {
   @Input() options: [] = [];
    
 
-  constructor(private api: DynamicFormServiceService, sanitizer: DomSanitizer) {
+  constructor(private api: DynamicFormServiceService, sanitizer: DomSanitizer,private applicationServiceService: ApplicationServiceService) {
     super(sanitizer);
   }
 
