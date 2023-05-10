@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angul
 import { Observable, throwError, lastValueFrom } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IContainer } from '../model/i-widget'
+import { ApplicationServiceService } from './application-service.service'
 
 const endpoint = 'http://localhost:8091/esignPOC/';
 @Injectable({
@@ -10,7 +11,7 @@ const endpoint = 'http://localhost:8091/esignPOC/';
 })
 export class DynamicFormServiceService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private applicationServiceService:ApplicationServiceService) { }
 
   private handleError(error: HttpErrorResponse): any {
     if (error.error instanceof ErrorEvent) {
@@ -34,11 +35,14 @@ export class DynamicFormServiceService {
   }
 
   getFormDefinition(formName: string): Promise<IContainer> {
+    //this.applicationServiceService.setBlockUI(true);
     return lastValueFrom(this.http.get<IContainer>(
       endpoint + 'content/forms/' + formName));
   }
   getOptions(listName: string): Promise<[]> {
-    return lastValueFrom(this.http.get<[]>(
-      endpoint + 'options/' + listName));
+    this.applicationServiceService.setBlockUI(true);
+    var c = lastValueFrom(this.http.get<[]>(
+      endpoint + 'options/' + listName)); 
+      return c;
   }
 }

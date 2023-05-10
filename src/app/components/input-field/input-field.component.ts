@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IInputField, ITextField, INumericField, IDateField, IWidget, LABEL_POSITION, WIDGET_SUB_TYPES, IComboboxField,IMethodCall } from '../../model/i-widget';
+import { IInputField, ITextField, INumericField, IDateField, IWidget, LABEL_POSITION, WIDGET_SUB_TYPES, IComboboxField, IMethodCall } from '../../model/i-widget';
 import { Helper } from '../../shared/helper';
 import { FormGroup } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
@@ -20,9 +20,9 @@ export class InputFieldComponent extends BaseWidget {
   public inputField?: IInputField;
   WSUBTYPES = WIDGET_SUB_TYPES;
   @Input() options: [] = [];
-   
 
-  constructor(private api: DynamicFormServiceService, sanitizer: DomSanitizer,private applicationServiceService: ApplicationServiceService) {
+
+  constructor(private api: DynamicFormServiceService, sanitizer: DomSanitizer, private applicationServiceService: ApplicationServiceService) {
     super(sanitizer);
   }
 
@@ -30,7 +30,7 @@ export class InputFieldComponent extends BaseWidget {
     return errorObject ? Object.keys(errorObject) : [];
   }
 
-  getWrapperClass():string{
+  getWrapperClass(): string {
     return this.inputWidget?.config?.labelPosition == LABEL_POSITION.TOP ? ' labeltop ' : ' labelleft ';
   }
   getError(errorObject: any): string {
@@ -87,9 +87,8 @@ export class InputFieldComponent extends BaseWidget {
       this.options = this.getOptions();
       if (this.inputField.subType == WIDGET_SUB_TYPES.COMBOBOX) {
         let c = this.inputField as IComboboxField;
-        if (c.listName) {
-          this.api.getOptions(c.listName).then(value => { this.options = value; });
-        }
+        var me = this;
+        setTimeout(function () { if (c.listName) me.api.getOptions(c.listName).then(value => { me.options = value; }); }, 3);
       }
     }
   }

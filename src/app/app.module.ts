@@ -9,6 +9,7 @@ import { MainPageComponent } from './components/main-page/main-page.component';
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
 import { InputFieldComponent } from './components/input-field/input-field.component';
 import { CalendarModule } from 'primeng/calendar';
+import { BlockUIModule } from 'primeng/blockui';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -35,6 +36,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   imports: [
     AppRoutingModule,
+    BlockUIModule,
     BrowserModule,
     BrowserAnimationsModule,
     ButtonModule,

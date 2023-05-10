@@ -23,7 +23,36 @@ export class DynamicFormComponent extends BaseWidget {
 
   constructor(private api: DynamicFormServiceService, private formBuilder: FormBuilder, sanitizer: DomSanitizer, private applicationServiceService: ApplicationServiceService) {
     super(sanitizer);
+    this.applicationServiceService.formName.subscribe((name) => {
+      if (this.formName != name) {
+        this.setFormName(name);
+      }
+    })
+    this.applicationServiceService.blockUI.subscribe((name) => {
+      this.blockDocument(name);
+    });
   }
+  blockedDocumentCounter: number = 0;
+  blockedDocument: boolean = false;
+
+  setFormName(name: string) {
+    this.formName = name;
+    if (this.formName) {
+      this.api.getFormDefinition(this.formName).then(value => { this.init(value); });
+    }
+  }
+
+  blockDocument(v: boolean) {
+    if (v)
+      this.blockedDocumentCounter++;
+    else
+      if (this.blockedDocumentCounter > 0)
+        this.blockedDocumentCounter--;
+    this.blockedDocument = this.blockedDocumentCounter > 0;
+    console.log("this.blockedDocument=", this.blockedDocument);
+    console.log("this.blockedDocumentCounter=", this.blockedDocumentCounter);
+  }
+
   getField(id: string): AbstractControl | null | undefined {
     return this.dynamicFormGroup?.get(id.toString());
   }
@@ -102,26 +131,20 @@ export class DynamicFormComponent extends BaseWidget {
 
 
   ngOnInit() {
-    this.applicationServiceService.formName.subscribe((name) => {
-      if (this.formName != name) {
-        this.formName = name;
-        this.ngOnInit();
-      }
-    })
     if (!this.dynamicFormGroup)
       this.dynamicFormGroup = this.formBuilder.group({})
-    if (this.formName) {
-      this.api.getFormDefinition(this.formName).then(value => { this.init(value); });
-    }
-    this.widgetDefinition = this.container;
+      if (this.formName) {
+        this.api.getFormDefinition(this.formName).then(value => { this.init(value); });
+      }
+      this.widgetDefinition = this.container;
     this.dynamicFormGroup.valueChanges.subscribe(selectedValue => {
-      console.log(selectedValue);
+      //console.log(selectedValue);
     })
   }
 
   onSubmit() {
     // TODO: Use EventEmitter with form value
-    console.warn(this.dynamicFormGroup?.value);
+    //console.warn(this.dynamicFormGroup?.value);
     this.getField('phoneNumber')?.setValue("");
     this.getField('phoneNumber')?.markAsDirty();
   }

@@ -2,16 +2,19 @@ import { Injectable } from '@angular/core';
 import { catchError, tap } from 'rxjs/operators';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
+import { ApplicationServiceService } from '../services/application-service.service';
 @Injectable({
   providedIn: 'root'
 })
 export class HttpErrorInterceptorService implements HttpInterceptor {
 
-  constructor() { }
+  constructor( private applicationServiceService:ApplicationServiceService) { }
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request)
       .pipe(
-        tap(data => console.log(data)),
+        tap(
+          t=>{if(t.type != 0) this.applicationServiceService.setBlockUI(false);}
+          ),
         catchError((error: HttpErrorResponse) => {
           if (error.error instanceof ErrorEvent) {
             // A client-side or network error occurred. Handle it accordingly.

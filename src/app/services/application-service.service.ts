@@ -12,4 +12,10 @@ export class ApplicationServiceService {
   setFormName( name:string){
     this.aFormName.next(name);
   }
+  private aBlockUI: Subject<boolean> = new Subject<boolean>();    // consider putting the actual type of the data you will receive
+  public blockUI = this.aBlockUI.asObservable();
+
+  setBlockUI( value:boolean){
+    this.aBlockUI.next(value);
+  }
 }
