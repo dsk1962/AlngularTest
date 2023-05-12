@@ -26,6 +26,7 @@ export class DynamicFormComponent extends BaseWidget {
     super(sanitizer);
     this.applicationServiceService.formRequest.subscribe((request) => {
       if (request) {
+        this.formName = request.formName;
         this.setFormRequest(request);
       }
     })
@@ -69,6 +70,7 @@ export class DynamicFormComponent extends BaseWidget {
   }
 
   init(container: IContainer) {
+    this.widgetDefinition = container;
     this.container = container;
     this.addField(container);
     this.setInitValue(this.container);

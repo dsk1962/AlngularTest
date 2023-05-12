@@ -3,105 +3,138 @@
 @import "primeng/resources/primeng.css";
 @import "primeicons/primeicons.css";
 
-dynamic-container{
+dynamic-container {
     display: inherit;
     flex: inherit;
     justify-content: inherit;
 }
-dynamic-form p-calendar{
-    display: inherit;
-    flex:1;
-}
-dynamic-form p-inputnumber{
-    display: inherit;
-    flex:1;
-}
-dynamic-form p-inputmask{
-    display: inherit;
-    flex:1;
-}
-dynamic-form p-password{
-    display: inherit;
-    flex:1;
-}
-dynamic-form p-dropdown{
-    display: inherit;
-    flex:1;
-}
 
-dynamic-form{
+dynamic-form p-calendar {
     display: inherit;
-    justify-content: inherit;
-    flex:1;
-}
-dynamic-form .p-calendar{
-    flex:1;
-}
-dynamic-form .p-inputmask{
-    flex:1;
-}
-dynamic-form .p-dropdown{
-    flex:1;
-}
-dynamic-form  .p-password{
-    flex:1;
-}
-dynamic-form  .p-inputtext{
-    flex:1;
-}
-dynamic-form  .p-inputnumber{
-    flex:1;
-}
-.dynamic-container{
-    padding: 5px;
-}
-.dynamic-field{
-    margin: 3px 0px 3px 0px;
-}
-.dynamic-container.vlayout{
-    display:flex;
-    flex-direction: column;
-    flex:1;
-}
-.dynamic-container.hlayout{
-    display:flex;
-    flex-direction: row;
-    flex:1;
-}
-.dynamic-container.blayout{
-    display:block;
-}
-
-.dynamic-field .labelleft{
-    display:flex;
-    flex-direction: row;
-}
-.dif-label{
-    width:130px;
-}
-.dif-label-required{
-    color:red;
-}
-.dynamic-field .labeltop{
-    display:flex;
-    flex-direction: column;
-}
-.dynamic-field  textarea{
     flex: 1;
 }
-.dynamic-field .labelleft{
-    display:flex;
+
+dynamic-form p-inputnumber {
+    display: inherit;
+    flex: 1;
+}
+
+dynamic-form p-inputmask {
+    display: inherit;
+    flex: 1;
+}
+
+dynamic-form p-password {
+    display: inherit;
+    flex: 1;
+}
+
+dynamic-form p-dropdown {
+    display: inherit;
+    flex: 1;
+}
+
+dynamic-form {
+    display: inherit;
+    justify-content: inherit;
+    flex: 1;
+}
+
+dynamic-form .p-calendar {
+    flex: 1;
+}
+
+dynamic-form .p-inputmask {
+    flex: 1;
+}
+
+dynamic-form .p-dropdown {
+    flex: 1;
+}
+
+dynamic-form .p-password {
+    flex: 1;
+}
+
+dynamic-form .p-inputtext {
+    flex: 1;
+}
+
+dynamic-form .p-inputnumber {
+    flex: 1;
+}
+
+.dynamic-container {
+    padding: 5px;
+}
+
+.dynamic-field {
+    margin: 3px 0px 3px 0px;
+}
+
+.dynamic-container.vlayout {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.dynamic-container.hlayout {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}
+
+.dynamic-container.blayout {
+    display: block;
+}
+
+.dynamic-field .labelleft {
+    display: flex;
     flex-direction: row;
 }
-.dynamic-field .labelleft label{
+
+.dif-label {
+    width: 130px;
+}
+
+.dif-label-required {
+    color: red;
+}
+
+.dynamic-field .labeltop {
+    display: flex;
+    flex-direction: column;
+}
+
+.dynamic-field textarea {
+    flex: 1;
+}
+
+.dynamic-field .labelleft {
+    display: flex;
+    flex-direction: row;
+}
+
+.dynamic-field .labelleft label {
     display: flex;
     justify-content: center;
     flex-direction: column;
 }
-.dif-label-required{
+
+.dif-label-required {
     margin-left: 4px;
 }
 
-.dynamic-toolbar p-button{
+.dynamic-toolbar p-button {
     margin-right: 10px;
+}
+
+.fixed-width-centered-container {
+    width: 1000px;
+    justify-content: center;
+}
+
+.full-width-centered-container {
+    width: 100%;
+    justify-content: center;
 }
