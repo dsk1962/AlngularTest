@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable, throwError, lastValueFrom } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { IContainer } from '../model/i-widget'
+import { IContainer,FormRequest } from '../model/i-widget'
 import { ApplicationServiceService } from './application-service.service'
 
 const endpoint = 'http://localhost:8091/esignPOC/';
@@ -34,10 +34,11 @@ export class DynamicFormServiceService {
       endpoint +'content/'+ name, requestOptions));
   }
 
-  getFormDefinition(formName: string): Promise<IContainer> {
+  getFormDefinition(request: FormRequest): Promise<IContainer> {
     //this.applicationServiceService.setBlockUI(true);
+    var params = request.parameters ? request.parameters : {};
     return lastValueFrom(this.http.get<IContainer>(
-      endpoint + 'content/forms/' + formName));
+      endpoint + (request.action ? request.action:'content/forms/') + request.formName,{"params":params}));
   }
   getOptions(listName: string): Promise<[]> {
     this.applicationServiceService.setBlockUI(true);

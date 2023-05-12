@@ -1,7 +1,7 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { Calendar } from 'primeng/calendar';
 import { Dropdown } from 'primeng/dropdown';
-import { IWidget, WIDGET_TYPES, LAYOUT_TYPES, IInputField, IContainer } from '../../model/i-widget';
+import { IWidget, WIDGET_TYPES, LAYOUT_TYPES, IInputField, IContainer, FormRequest } from '../../model/i-widget';
 import { Helper } from '../../shared/helper';
 import { BaseWidget } from '../../shared/base-widget';
 import { FormGroup, FormControl, FormBuilder, AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
@@ -19,13 +19,14 @@ export class DynamicFormComponent extends BaseWidget {
   @Input() container?: IContainer;
   @Input() widgets?: IWidget[];
   @Input() formName?: string;
+  formRequest?: FormRequest;
   WTYPES = WIDGET_TYPES;
 
   constructor(private api: DynamicFormServiceService, private formBuilder: FormBuilder, sanitizer: DomSanitizer, private applicationServiceService: ApplicationServiceService) {
     super(sanitizer);
-    this.applicationServiceService.formName.subscribe((name) => {
-      if (this.formName != name) {
-        this.setFormName(name);
+    this.applicationServiceService.formRequest.subscribe((request) => {
+      if (request) {
+        this.setFormRequest(request);
       }
     })
     this.applicationServiceService.blockUI.subscribe((name) => {
@@ -35,10 +36,10 @@ export class DynamicFormComponent extends BaseWidget {
   blockedDocumentCounter: number = 0;
   blockedDocument: boolean = false;
 
-  setFormName(name: string) {
-    this.formName = name;
-    if (this.formName) {
-      this.api.getFormDefinition(this.formName).then(value => { this.init(value); });
+  setFormRequest(request: FormRequest) {
+    this.formRequest = request;
+    if (this.formRequest) {
+      this.api.getFormDefinition(this.formRequest).then(value => { this.init(value); });
     }
   }
 
@@ -133,10 +134,16 @@ export class DynamicFormComponent extends BaseWidget {
   ngOnInit() {
     if (!this.dynamicFormGroup)
       this.dynamicFormGroup = this.formBuilder.group({})
-      if (this.formName) {
-        this.api.getFormDefinition(this.formName).then(value => { this.init(value); });
+      if (this.formRequest) {
+        this.api.getFormDefinition(this.formRequest).then(value => { this.init(value); });
       }
-      this.widgetDefinition = this.container;
+      else if (this.formName) {
+        formRequest:
+        this.formRequest = new FormRequest();
+        this.formRequest.formName = this.formName;
+      this.api.getFormDefinition(this.formRequest).then(value => { this.init(value); });
+    }
+    this.widgetDefinition = this.container;
     this.dynamicFormGroup.valueChanges.subscribe(selectedValue => {
       //console.log(selectedValue);
     })

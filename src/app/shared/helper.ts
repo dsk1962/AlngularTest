@@ -73,12 +73,12 @@ export class Helper {
 
     static runMethod(obj: any, cfg: IMethodCall) {
         if (cfg && cfg.method) {
-            var obj = cfg.member ? obj[cfg.member] : obj;
-            if (this.isFunction(obj[cfg.method]))
+            var fobj = cfg.member ? obj[cfg.member] : obj;
+            if (this.isFunction(fobj[cfg.method]))
                 if (cfg.params)
-                    obj[cfg.method](...cfg.params);
+                    fobj[cfg.method](obj,...cfg.params);
                 else
-                    obj[cfg.method]();
+                    fobj[cfg.method](obj);
         }
     }
     static isFunction(functionToCheck: any) {

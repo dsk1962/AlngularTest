@@ -11,9 +11,9 @@ export class MainPageComponent {
     this.applicationServiceService.blockUI.subscribe((name) => {
       this.blockDocument(name);
     });
-    this.applicationServiceService.formName.subscribe((name) => {
-      this.setFormName(name);
-    })
+    //this.applicationServiceService.formName.subscribe((name) => {
+      //this.setFormName(name);
+    //})
   }
   setFormName(name: string) {
     this.formName = name;
