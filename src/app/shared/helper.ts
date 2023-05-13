@@ -16,7 +16,7 @@ export class Helper {
             validatorsFn.push(Validators.required);
         if (typeof f.minLength !== 'undefined')
             validatorsFn.push(Validators.minLength(f.minLength));
-        if (typeof f.maxLength !== 'undefined')
+        if (typeof f.maxLength !== 'undefined' && f.maxLength > 0)
             validatorsFn.push(Validators.maxLength(f.maxLength));
         if (typeof f.config?.email !== 'undefined')
             validatorsFn.push(Validators.email);
