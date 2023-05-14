@@ -41,7 +41,7 @@
             </ng-container>
             <ng-container *ngSwitchDefault>
                 <input class="{{getClassName()}}" pInputText type="text" [id]="inputField.id"  [attr.readonly]="inputField.readonly" 
-                    placeholder="{{getPlaceholder()}}" [formControlName]="HELPER.getControlName(inputField)">
+                    placeholder="{{getPlaceholder()}}" [formControlName]="HELPER.getControlName(inputField)" [pattern]="getITextField().pattern || ''">
             </ng-container>
         </ng-container>
     </div>

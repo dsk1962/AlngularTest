@@ -37,6 +37,8 @@ export class InputFieldComponent extends BaseWidget {
     let keys = Object.keys(errorObject);
     if (keys.includes('required'))
       return 'This field is required';
+    if (keys.includes('pattern'))
+      return (this.inputWidget as any)?.patternError ? (this.inputWidget as any)?.patternError : ('Value must match pattern: ' + (this.inputWidget as any)?.pattern);
     if (keys.includes('minlength'))
       return 'Text length must be greater or equal  ' + (this.inputWidget as any)?.minLength + ' characters';
     if (keys.includes('maxlength'))

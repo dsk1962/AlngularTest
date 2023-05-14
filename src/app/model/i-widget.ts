@@ -42,6 +42,7 @@ export interface ITextField extends IInputField {
     minLength?: number | null;
     mask?: string;
     pattern?: RegExp | string;
+    patternError?: string;
 }
 
 export interface INumericField extends IInputField {
