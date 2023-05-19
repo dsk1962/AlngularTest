@@ -111,6 +111,3 @@ export class ActionRequest {
     parameters?: HttpParams;
 }
 
-export class FormRequest extends ActionRequest{
-    formName?: string;
-}

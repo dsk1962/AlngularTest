@@ -12,9 +12,6 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request)
       .pipe(
-        tap(
-          t=>{if(t.type != 0) this.applicationServiceService.setBlockUI(false);}
-          ),
         catchError((error: HttpErrorResponse) => {
           if (error.error instanceof ErrorEvent) {
             // A client-side or network error occurred. Handle it accordingly.

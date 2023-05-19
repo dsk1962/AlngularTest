@@ -93,7 +93,7 @@ export class InputFieldComponent extends BaseWidget {
       if (this.inputField.subType == WIDGET_SUB_TYPES.COMBOBOX) {
         let c = this.inputField as IComboboxField;
         var me = this;
-        setTimeout(function () { if (c.listName) me.api.getOptions(c.listName).then(value => { me.options = value; }); }, 3);
+        setTimeout(function () { if (c.listName) me.api.getOptions(me, c.listName); }, 3);
       }
     }
   }

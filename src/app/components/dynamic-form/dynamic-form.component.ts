@@ -1,13 +1,14 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { Calendar } from 'primeng/calendar';
 import { Dropdown } from 'primeng/dropdown';
-import { IWidget, WIDGET_TYPES, LAYOUT_TYPES, IInputField, IContainer, FormRequest } from '../../model/i-widget';
+import { IWidget, WIDGET_TYPES, LAYOUT_TYPES, IInputField, IContainer, ActionRequest } from '../../model/i-widget';
 import { Helper } from '../../shared/helper';
 import { BaseWidget } from '../../shared/base-widget';
 import { FormGroup, FormControl, FormBuilder, AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { DynamicFormServiceService } from '../../services/dynamic-form-service.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ApplicationServiceService } from '../../services/application-service.service';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'dynamic-form',
@@ -19,30 +20,22 @@ export class DynamicFormComponent extends BaseWidget {
   @Input() container?: IContainer;
   @Input() widgets?: IWidget[];
   @Input() formName?: string;
-  formRequest?: FormRequest;
   WTYPES = WIDGET_TYPES;
 
   constructor(private api: DynamicFormServiceService, private formBuilder: FormBuilder, sanitizer: DomSanitizer, private applicationServiceService: ApplicationServiceService) {
     super(sanitizer);
-    this.applicationServiceService.formRequest.subscribe((request) => {
-      if (request) {
-        this.formName = request.formName;
-        this.setFormRequest(request);
+    this.applicationServiceService.blockUI.subscribe((v) => {
+      this.blockDocument(v);
+    });
+    this.applicationServiceService.formContainer.subscribe((container) => {
+      if (container) {
+        this.container = container;
+        this.init(this.container);
       }
     })
-    this.applicationServiceService.blockUI.subscribe((name) => {
-      this.blockDocument(name);
-    });
   }
   blockedDocumentCounter: number = 0;
   blockedDocument: boolean = false;
-
-  setFormRequest(request: FormRequest) {
-    this.formRequest = request;
-    if (this.formRequest) {
-      this.api.getFormDefinition(this.formRequest).then(value => { this.init(value); });
-    }
-  }
 
   blockDocument(v: boolean) {
     if (v)
@@ -135,15 +128,12 @@ export class DynamicFormComponent extends BaseWidget {
 
   ngOnInit() {
     if (!this.dynamicFormGroup)
-      this.dynamicFormGroup = this.formBuilder.group({})
-      if (this.formRequest) {
-        this.api.getFormDefinition(this.formRequest).then(value => { this.init(value); });
-      }
-      else if (this.formName) {
-        formRequest:
-        this.formRequest = new FormRequest();
-        this.formRequest.formName = this.formName;
-      this.api.getFormDefinition(this.formRequest).then(value => { this.init(value); });
+      this.dynamicFormGroup = this.formBuilder.group({});
+    if (this.formName) {
+      let actionRequest = new ActionRequest();
+      actionRequest.action = "staticForm";
+      actionRequest.parameters=new HttpParams().append("formPath",this.formName);
+      this.api.runAction(actionRequest);
     }
     this.widgetDefinition = this.container;
     this.dynamicFormGroup.valueChanges.subscribe(selectedValue => {
