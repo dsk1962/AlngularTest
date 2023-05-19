@@ -8,40 +8,44 @@
         </label>
         <ng-container [ngSwitch]="inputField.subType">
             <ng-container *ngSwitchCase="WSUBTYPES.CHECKBOX">
-                <p-checkbox class="{{getClassName()}}" [readonly]="inputField.readonly"
+                <p-checkbox class="{{getClassName()}}" [readonly]="inputField.readonly" pTooltip="{{getTooltip()}}"
                     [formControlName]="HELPER.getControlName(inputField)"></p-checkbox>
             </ng-container>
             <ng-container *ngSwitchCase="WSUBTYPES.DATE">
-                <p-calendar class="{{getClassName()}}" [showIcon]="true"  [name]="HELPER.getControlName(inputField)"
-                    [formControlName]="HELPER.getControlName(inputField)"
+                <p-calendar class="{{getClassName()}}" [showIcon]="true" [name]="HELPER.getControlName(inputField)"
+                    pTooltip="{{getTooltip()}}" [formControlName]="HELPER.getControlName(inputField)"
                     placeholder="{{getPlaceholder()}}"></p-calendar>
             </ng-container>
             <ng-container *ngSwitchCase="WSUBTYPES.MASK">
-                <p-inputMask [mask]="getITextField().mask || '*'" placeholder="{{getPlaceholder()}}"  [readonly]="inputField.readonly"
-                    class="{{getClassName()}}" [formControlName]="HELPER.getControlName(inputField)"></p-inputMask>
+                <p-inputMask [mask]="getITextField().mask || '*'" placeholder="{{getPlaceholder()}}"
+                    [readonly]="inputField.readonly" pTooltip="{{getTooltip()}}" class="{{getClassName()}}"
+                    [formControlName]="HELPER.getControlName(inputField)"></p-inputMask>
             </ng-container>
             <ng-container *ngSwitchCase="WSUBTYPES.NUMERIC">
-                <p-inputNumber class="{{getClassName()}}" [showButtons]="true"
-                    [formControlName]="HELPER.getControlName(inputField)"
-                    placeholder="{{getPlaceholder()}}"  [readonly]="inputField.readonly"></p-inputNumber>
+                <p-inputNumber class="{{getClassName()}}" [showButtons]="true" pTooltip="{{getTooltip()}}"
+                    [formControlName]="HELPER.getControlName(inputField)" placeholder="{{getPlaceholder()}}"
+                    [readonly]="inputField.readonly"></p-inputNumber>
             </ng-container>
             <ng-container *ngSwitchCase="WSUBTYPES.PASSWORD">
-                <p-password class="{{getClassName()}}" placeholder="{{getPlaceholder()}}" class="{{getClassName()}}" 
-                    [toggleMask]="true" [formControlName]="HELPER.getControlName(inputField)"></p-password>
+                <p-password class="{{getClassName()}}" placeholder="{{getPlaceholder()}}" class="{{getClassName()}}"
+                    pTooltip="{{getTooltip()}}" [toggleMask]="true"
+                    [formControlName]="HELPER.getControlName(inputField)"></p-password>
             </ng-container>
             <ng-container *ngSwitchCase="WSUBTYPES.TEXTAREA">
-                <textarea class="{{getClassName()}}" [rows]="inputField.config?.rows ? inputField.config?.rows : ''"  [readonly]="inputField.readonly"
-                    pInputTextarea placeholder="{{getPlaceholder()}}"
-                    [formControlName]="HELPER.getControlName(inputField)"></textarea>
+                <textarea class="{{getClassName()}}" [rows]="inputField.config?.rows ? inputField.config?.rows : ''"
+                    [readonly]="inputField.readonly" pTooltip="{{getTooltip()}}" pInputTextarea
+                    placeholder="{{getPlaceholder()}}" [formControlName]="HELPER.getControlName(inputField)"></textarea>
             </ng-container>
             <ng-container *ngSwitchCase="WSUBTYPES.COMBOBOX">
-                <p-dropdown [options]="options" [optionLabel]="getIComboboxField().optionLabel || 'name'"  [readonly]="inputField.readonly"
+                <p-dropdown [options]="options" [optionLabel]="getIComboboxField().optionLabel || 'name'"
+                    [readonly]="inputField.readonly" pTooltip="{{getTooltip()}}"
                     [optionValue]="getIComboboxField().optionValue || 'value'" placeholder="{{getPlaceholder()}}"
                     [formControlName]="HELPER.getControlName(inputField)"></p-dropdown>
             </ng-container>
             <ng-container *ngSwitchDefault>
-                <input class="{{getClassName()}}" pInputText type="text" [id]="inputField.id"  [attr.readonly]="inputField.readonly" 
-                    placeholder="{{getPlaceholder()}}" [formControlName]="HELPER.getControlName(inputField)" [pattern]="getITextField().pattern || ''">
+                <input class="{{getClassName()}}" pInputText type="text" [id]="inputField.id"
+                    [attr.readonly]="inputField.readonly" pTooltip="{{getTooltip()}}" placeholder="{{getPlaceholder()}}"
+                    [formControlName]="HELPER.getControlName(inputField)" [pattern]="getITextField().pattern || ''">
             </ng-container>
         </ng-container>
     </div>

@@ -12,6 +12,10 @@ export class ApplicationServiceService {
   private aFormRequest: Subject<FormRequest> = new Subject<FormRequest>();    // consider putting the actual type of the data you will receive
   public formRequest = this.aFormRequest.asObservable();
 
+  pushFormRequest(request: FormRequest){
+    this.aFormRequest.next(request);
+  }
+
   setFormRequest(obj: any, formName: string, action: string) {
     let request = new FormRequest();
     request.formName = formName;

@@ -27,6 +27,7 @@ export interface IButton extends IWidget {
 export interface IInputField extends IWidget {
     required?: boolean;
     placeholder?: string;
+    tooltip?: string;
     disabled: boolean;
     readonly: boolean;
     value?: string | number | null | Date | boolean;
@@ -105,8 +106,11 @@ export enum LAYOUT_TYPES {
     HORIZONTAL = 'horizontal'
 }
 
-export class FormRequest {
-    formName?: string;
+export class ActionRequest {
     action?:string;
     parameters?: HttpParams;
+}
+
+export class FormRequest extends ActionRequest{
+    formName?: string;
 }

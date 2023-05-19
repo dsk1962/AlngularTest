@@ -7,7 +7,7 @@ import { DynamicFormServiceService } from '../../services/dynamic-form-service.s
 import { BaseWidget } from '../../shared/base-widget';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ApplicationServiceService } from '../../services/application-service.service';
-
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'div[dynamic-input-field]',
@@ -80,6 +80,9 @@ export class InputFieldComponent extends BaseWidget {
     if (this.inputField?.placeholder) return this.inputField?.placeholder;
     let mask = this.getITextField().mask;
     return mask ? mask : '';
+  }
+  getTooltip(): string {
+    return this.inputField?.tooltip ? this.inputField?.tooltip : '';
   }
 
   ngOnInit() {
