@@ -38,12 +38,17 @@ export class DynamicFormComponent extends BaseWidget {
   blockedDocument: boolean = false;
 
   blockDocument(v: boolean) {
+    var me = this;
     if (v)
       this.blockedDocumentCounter++;
     else
       if (this.blockedDocumentCounter > 0)
         this.blockedDocumentCounter--;
-    this.blockedDocument = this.blockedDocumentCounter > 0;
+    let b = this.blockedDocumentCounter > 0;
+    if (!b)
+      setTimeout(() => { if (me.blockedDocumentCounter == 0) me.blockedDocument = false }, 100);
+    else
+      this.blockedDocument = b;
     console.log("this.blockedDocument=", this.blockedDocument);
     console.log("this.blockedDocumentCounter=", this.blockedDocumentCounter);
   }
@@ -132,7 +137,7 @@ export class DynamicFormComponent extends BaseWidget {
     if (this.formName) {
       let actionRequest = new ActionRequest();
       actionRequest.action = "staticForm";
-      actionRequest.parameters=new HttpParams().append("formPath",this.formName);
+      actionRequest.parameters = new HttpParams().append("formPath", this.formName);
       this.api.runAction(actionRequest);
     }
     this.widgetDefinition = this.container;
