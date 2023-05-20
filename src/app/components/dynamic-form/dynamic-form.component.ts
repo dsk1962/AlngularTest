@@ -5,7 +5,6 @@ import { IWidget, WIDGET_TYPES, LAYOUT_TYPES, IInputField, IContainer, ActionReq
 import { Helper } from '../../shared/helper';
 import { BaseWidget } from '../../shared/base-widget';
 import { FormGroup, FormControl, FormBuilder, AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
-import { DynamicFormServiceService } from '../../services/dynamic-form-service.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ApplicationServiceService } from '../../services/application-service.service';
 import { HttpParams } from '@angular/common/http';
@@ -22,7 +21,7 @@ export class DynamicFormComponent extends BaseWidget {
   @Input() formName?: string;
   WTYPES = WIDGET_TYPES;
 
-  constructor(private api: DynamicFormServiceService, private formBuilder: FormBuilder, sanitizer: DomSanitizer, private applicationServiceService: ApplicationServiceService) {
+  constructor( private formBuilder: FormBuilder, sanitizer: DomSanitizer, private applicationServiceService: ApplicationServiceService) {
     super(sanitizer);
     this.applicationServiceService.blockUI.subscribe((v) => {
       this.blockDocument(v);
@@ -138,7 +137,7 @@ export class DynamicFormComponent extends BaseWidget {
       let actionRequest = new ActionRequest();
       actionRequest.action = "staticForm";
       actionRequest.parameters = new HttpParams().append("formPath", this.formName);
-      this.api.runAction(actionRequest);
+      this.applicationServiceService.runAction(actionRequest);
     }
     this.widgetDefinition = this.container;
     this.dynamicFormGroup.valueChanges.subscribe(selectedValue => {

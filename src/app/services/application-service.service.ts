@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ActionRequest, IContainer } from '../model/i-widget';
-import { HttpClient,HttpParams, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Observable, throwError, lastValueFrom } from 'rxjs';
 
 
 const endpoint = 'http://localhost:8091/esignPOC/';
@@ -15,18 +16,18 @@ export class ApplicationServiceService {
   private aErrorMessage: Subject<string> = new Subject<string>();    // consider putting the actual type of the data you will receive
   public errorMessage = this.aErrorMessage.asObservable();
 
-  pushFormContainer(container: IContainer){
+  pushFormContainer(container: IContainer) {
     this.aFormContainer.next(container);
   }
 
-  setErrorMessage(message: string){
+  setErrorMessage(message: string) {
     this.aErrorMessage.next(message);
   }
 
-  getStaticForm(obj:any,formName: string) {
+  getStaticForm(obj: any, formName: string) {
     let request = new ActionRequest();
     request.action = "staticForm";
-    request.parameters = new HttpParams().append("formPath",formName);
+    request.parameters = new HttpParams().append("formPath", formName);
     this.runAction(request);
   }
   private aBlockUI: Subject<boolean> = new Subject<boolean>();    // consider putting the actual type of the data you will receive
@@ -36,9 +37,9 @@ export class ApplicationServiceService {
     this.aBlockUI.next(value);
   }
 
-  runAction(request: ActionRequest|string, successHandler?: any): void {
+  runAction(request: ActionRequest | string, successHandler?: any): void {
     this.setBlockUI(true);
-    if( typeof request === "string" ){
+    if (typeof request === "string") {
       let action = request;
       request = new ActionRequest();
       request.action = action;
@@ -66,4 +67,41 @@ export class ApplicationServiceService {
       });
   }
 
+  postBody(action: string, body: any, successHandler?: any): void {
+    this.setBlockUI(true);
+    this.http.post<any>(
+      endpoint + action, body).subscribe({
+        next: data => {
+          this.setBlockUI(false);
+          if (data.success) {
+            if (data.formRequest)
+              this.runAction(data.formRequest);
+            else if (data.formDefinition)
+              this.pushFormContainer(data.formDefinition);
+            if (successHandler)
+              successHandler(data.result);
+          };
+        },
+        error: error => {
+          this.setBlockUI(false);
+          this.setErrorMessage(error.message);
+          console.error('postBody error!', error);
+        }
+      });
+  }
+  getResource(name: String): Promise<string> {
+    const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
+    const requestOptions: Object = {
+      headers: headers,
+      responseType: 'text'
+    }
+    return lastValueFrom(this.http.get<string>(
+      endpoint + 'content/' + name, requestOptions));
+  }
+
+  getOptions(combo: any, listName: string): void {
+    let request = new ActionRequest();
+    request.action = 'options/' + listName;
+    this.runAction(request, function (a: any) { combo.options = a; });
+  }
 }

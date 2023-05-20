@@ -1,6 +1,6 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { DynamicFormServiceService } from '../../services/dynamic-form-service.service';
+import { ApplicationServiceService } from '../../services/application-service.service';
 
 
 @Component({
@@ -10,13 +10,13 @@ import { DynamicFormServiceService } from '../../services/dynamic-form-service.s
   styleUrls: ['./external-html.component.scss']
 })
 export class ExternalHtmlComponent {
-  constructor(private api: DynamicFormServiceService,private sanitizer: DomSanitizer) { }
+  constructor(private applicationServiceService: ApplicationServiceService,private sanitizer: DomSanitizer) { }
   htmlText: SafeHtml | undefined;
   @Input()externalName?: String;
 
   ngOnInit() {
     if (this.externalName)
-      this.api.getResource(this.externalName).then(value => this.htmlText = this.sanitizer.bypassSecurityTrustHtml(value));
+      this.applicationServiceService.getResource(this.externalName).then(value => this.htmlText = this.sanitizer.bypassSecurityTrustHtml(value));
   };
 
 }
