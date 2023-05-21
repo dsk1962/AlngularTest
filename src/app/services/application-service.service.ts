@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { ActionRequest, IContainer } from '../model/i-widget';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable, throwError, lastValueFrom } from 'rxjs';
+import { FormGroup } from '@angular/forms';
 
 
 const endpoint = 'http://localhost:8091/esignPOC/';
@@ -88,6 +89,26 @@ export class ApplicationServiceService {
           console.error('postBody error!', error);
         }
       });
+  }
+  sendForm(obj: any, action: string) {
+    let fgroup;
+    if (obj instanceof FormGroup)
+      fgroup = obj;
+    else if (obj.dynamicFormGroup)
+      fgroup = obj.dynamicFormGroup as FormGroup;
+    let request = new ActionRequest();
+    request.action = action;
+    request.addParameters(fgroup?.value);
+    this.runAction(request);
+  }
+  postForm(obj: any, action: string) {
+    let fgroup;
+    if (obj instanceof FormGroup)
+      fgroup = obj;
+    else if (obj.dynamicFormGroup)
+      fgroup = obj.dynamicFormGroup as FormGroup;
+    let values = fgroup?.value;
+    this.postBody(action,values);
   }
   getResource(name: String): Promise<string> {
     const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');

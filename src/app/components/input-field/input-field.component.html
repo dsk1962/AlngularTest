@@ -11,6 +11,9 @@
                 <p-checkbox class="{{getClassName()}}" [readonly]="inputField.readonly" pTooltip="{{getTooltip()}}"
                     [formControlName]="HELPER.getControlName(inputField)"></p-checkbox>
             </ng-container>
+            <ng-container *ngSwitchCase="WSUBTYPES.HIDDEN">
+                <input type="hidden" [formControlName]="HELPER.getControlName(inputField)">
+            </ng-container>
             <ng-container *ngSwitchCase="WSUBTYPES.DATE">
                 <p-calendar class="{{getClassName()}}" [showIcon]="true" [name]="HELPER.getControlName(inputField)"
                     pTooltip="{{getTooltip()}}" [formControlName]="HELPER.getControlName(inputField)"

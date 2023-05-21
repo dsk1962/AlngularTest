@@ -21,7 +21,7 @@ export class DynamicFormComponent extends BaseWidget {
   @Input() formName?: string;
   WTYPES = WIDGET_TYPES;
 
-  constructor( private formBuilder: FormBuilder, sanitizer: DomSanitizer, private applicationServiceService: ApplicationServiceService) {
+  constructor(private formBuilder: FormBuilder, sanitizer: DomSanitizer, private applicationServiceService: ApplicationServiceService) {
     super(sanitizer);
     this.applicationServiceService.blockUI.subscribe((v) => {
       this.blockDocument(v);

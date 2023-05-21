@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { IWidget,IButton, IMethodCall } from '../../model/i-widget';
+import { IWidget, IButton, IMethodCall } from '../../model/i-widget';
 import { BaseWidget } from '../../shared/base-widget';
 import { ApplicationServiceService } from '../../services/application-service.service';
 import { Helper } from '../../shared/helper';
@@ -12,18 +12,18 @@ import { Helper } from '../../shared/helper';
   templateUrl: './dynamic-button.component.html',
   styleUrls: ['./dynamic-button.component.scss']
 })
-export class DynamicButtonComponent extends BaseWidget{
+export class DynamicButtonComponent extends BaseWidget {
   @Input() dynamicFormGroup?: FormGroup;
   @Input() iWidget?: IWidget;
   public iButton?: IButton;
 
-  constructor(sanitizer :DomSanitizer,private applicationServiceService: ApplicationServiceService){
+  constructor(sanitizer: DomSanitizer, private applicationServiceService: ApplicationServiceService) {
     super(sanitizer);
   }
 
-  onClick(){
-    if(this.iButton?.onclick)
-    Helper.runMethod(this,this.iButton?.onclick);
+  onClick() {
+    if (this.iButton?.onclick)
+      Helper.runMethod(this, this.iButton?.onclick);
   }
 
   ngOnInit() {

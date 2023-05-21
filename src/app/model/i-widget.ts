@@ -89,6 +89,7 @@ export enum WIDGET_SUB_TYPES {
     NUMERIC = 'numeric',
     PASSWORD = 'password',
     TEXT = 'text',
+    HIDDEN = 'hiddenfield',
     TEXTAREA = 'textarea',
     // backend supported type(others)
     IMAGE = 'image',
@@ -107,7 +108,13 @@ export enum LAYOUT_TYPES {
 }
 
 export class ActionRequest {
-    action?:string;
-    parameters?: HttpParams;
+    action?: string;
+    parameters: HttpParams = new HttpParams();
+    addParameters(obj: any): void {
+        if (obj)
+            for (var key in obj) {
+                this.parameters = this.parameters.append(key, obj[key]);
+            }
+    }
 }
 
