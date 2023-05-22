@@ -14,15 +14,21 @@ export class ApplicationServiceService {
   constructor(private http: HttpClient) { }
   private aFormContainer: Subject<IContainer> = new Subject<IContainer>();    // consider putting the actual type of the data you will receive
   public formContainer = this.aFormContainer.asObservable();
-  private aErrorMessage: Subject<string> = new Subject<string>();    // consider putting the actual type of the data you will receive
-  public errorMessage = this.aErrorMessage.asObservable();
+  private anErrorMessage: Subject<string> = new Subject<string>();    // consider putting the actual type of the data you will receive
+  public errorMessage = this.anErrorMessage.asObservable();
+  private anInfoMessage: Subject<string> = new Subject<string>();    // consider putting the actual type of the data you will receive
+  public infoMessage = this.anInfoMessage.asObservable();
 
   pushFormContainer(container: IContainer) {
     this.aFormContainer.next(container);
   }
 
   setErrorMessage(message: string) {
-    this.aErrorMessage.next(message);
+    this.anErrorMessage.next(message);
+  }
+
+  setInfoMessage(message: string) {
+    this.anInfoMessage.next(message);
   }
 
   getStaticForm(obj: any, formName: string) {
@@ -56,9 +62,15 @@ export class ApplicationServiceService {
               this.runAction(data.formRequest);
             else if (data.formDefinition)
               this.pushFormContainer(data.formDefinition);
+            if (data.infoMessage)
+              this.setInfoMessage(data.infoMessage);
             if (successHandler)
               successHandler(data.result);
-          };
+          }
+          else {
+            let msg = data.errorMessage ? data.errorMessage : "Operation failed. No error message in response";
+            this.setErrorMessage(msg);
+          }
         },
         error: error => {
           this.setBlockUI(false);
@@ -79,9 +91,15 @@ export class ApplicationServiceService {
               this.runAction(data.formRequest);
             else if (data.formDefinition)
               this.pushFormContainer(data.formDefinition);
+            if (data.infoMessage)
+              this.setInfoMessage(data.infoMessage);
             if (successHandler)
               successHandler(data.result);
-          };
+          }
+          else {
+            let msg = data.errorMessage ? data.errorMessage : "Operation failed. No error message in response";
+            this.setErrorMessage(msg);
+          }
         },
         error: error => {
           this.setBlockUI(false);
@@ -108,7 +126,7 @@ export class ApplicationServiceService {
     else if (obj.dynamicFormGroup)
       fgroup = obj.dynamicFormGroup as FormGroup;
     let values = fgroup?.value;
-    this.postBody(action,values);
+    this.postBody(action, values);
   }
   getResource(name: String): Promise<string> {
     const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');

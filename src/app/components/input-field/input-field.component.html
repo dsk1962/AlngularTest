@@ -12,7 +12,7 @@
                     [formControlName]="HELPER.getControlName(inputField)"></p-checkbox>
             </ng-container>
             <ng-container *ngSwitchCase="WSUBTYPES.HIDDEN">
-                <input type="hidden" [formControlName]="HELPER.getControlName(inputField)">
+                <input type="hidden" [formControlName]="HELPER.getControlName(inputField)" [value]="getIInputField().initValue">
             </ng-container>
             <ng-container *ngSwitchCase="WSUBTYPES.DATE">
                 <p-calendar class="{{getClassName()}}" [showIcon]="true" [name]="HELPER.getControlName(inputField)"

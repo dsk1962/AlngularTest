@@ -23,6 +23,7 @@ import { ButtonModule } from 'primeng/button';
 import { DynamicButtonComponent } from './components/dynamic-button/dynamic-button.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MessageAreaComponent } from './components/message-area/message-area.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     DynamicFormComponent,
     InputFieldComponent,
     DynamicContainerComponent,
-    DynamicButtonComponent
+    DynamicButtonComponent,
+    MessageAreaComponent
   ],
   imports: [
     AppRoutingModule,
