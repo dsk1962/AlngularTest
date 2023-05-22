@@ -67,6 +67,18 @@ export class DynamicFormComponent extends BaseWidget {
   }
 
   init(container: IContainer) {
+    let fg = this.dynamicFormGroup;
+    //    if (fg)
+    //      for (const field in fg.controls) { // 'field' is a string
+    //      fg.removeControl(field);
+    //  }
+    if (fg) {
+      Object.keys(fg.controls).forEach(key => {
+        console.info("remove " + key)
+        if (fg)
+          fg.removeControl(key);
+      }); fg.reset();
+    }
     this.widgetDefinition = container;
     this.container = container;
     this.addField(container);
