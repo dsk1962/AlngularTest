@@ -89,6 +89,7 @@ export enum WIDGET_SUB_TYPES {
     NUMERIC = 'numeric',
     PASSWORD = 'password',
     TEXT = 'text',
+    DISPLAY = 'display',
     HIDDEN = 'hiddenfield',
     TEXTAREA = 'textarea',
     // backend supported type(others)

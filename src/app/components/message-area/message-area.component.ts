@@ -22,12 +22,18 @@ export class MessageAreaComponent extends BaseWidget {
   @Input() infoMessage?: string;
   @Input() errorMessage?: string;
 
-  setErrorMessage(msg: string) {
+  setErrorMessage(msg: string | undefined) {
     this.errorMessage = msg;
+  }
+  clearErrorMessage() {
+    delete this.errorMessage;
+  }
+  clearInfoMessage() {
+    delete this.errorMessage;
   }
 
   setInfoMessage(msg: string) {
-    this.infoMessage = msg;
+    delete this.infoMessage;
   }
 
 }
