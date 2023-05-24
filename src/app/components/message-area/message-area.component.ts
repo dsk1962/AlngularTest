@@ -33,7 +33,7 @@ export class MessageAreaComponent extends BaseWidget {
   }
 
   setInfoMessage(msg: string) {
-    delete this.infoMessage;
+    this.infoMessage = msg;
   }
 
 }
