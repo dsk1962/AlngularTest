@@ -71,6 +71,9 @@ export class InputFieldComponent extends BaseWidget {
   getLabelClassName(): string {
     return 'dif-label';
   }
+  getLabelStyle(): string {
+    return this.inputField?.labelStyle ? this.inputField?.labelStyle : "";
+  }
 
   getPlaceholder(): string {
     if (this.inputField?.placeholder) return this.inputField?.placeholder;

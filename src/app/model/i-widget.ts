@@ -8,6 +8,7 @@ export interface IWidget {
     label?: string,
     name?: string,
     style?: string,
+    labelStyle?: string,
     classNames?: string,
     subType?: string
     config?: any;

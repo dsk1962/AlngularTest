@@ -1,6 +1,6 @@
 <ng-container *ngIf="inputField && dynamicFormGroup">
     <div class="{{getWrapperClass()}}" [formGroup]="dynamicFormGroup">
-        <label [for]="inputField.id" class="{{getLabelClassName()}}">
+        <label [for]="inputField.id" class="{{getLabelClassName()}}" [style]="getLabelStyle()">
             <span>
                 {{inputField.label}}
                 <span class="dif-label-required" *ngIf="inputField.required">*</span>

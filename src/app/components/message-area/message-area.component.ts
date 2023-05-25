@@ -29,7 +29,7 @@ export class MessageAreaComponent extends BaseWidget {
     delete this.errorMessage;
   }
   clearInfoMessage() {
-    delete this.errorMessage;
+    delete this.infoMessage;
   }
 
   setInfoMessage(msg: string) {
