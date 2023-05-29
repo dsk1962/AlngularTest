@@ -38,6 +38,14 @@ dynamic-form {
     display: inherit;
     justify-content: inherit;
     flex: 1;
+    overflow:auto;
+}
+
+main-page {
+    display: inherit;
+    justify-content: inherit;
+    flex: 1;
+    overflow:auto;
 }
 
 dynamic-form .p-calendar {
@@ -58,6 +66,7 @@ dynamic-form .p-password {
 
 dynamic-form .p-inputtext {
     flex: 1;
+    width:100%;
 }
 
 dynamic-form .p-inputnumber {
@@ -158,11 +167,13 @@ dynamic-form .p-inputnumber {
 
 .info-message {
     color: green;
+    overflow: auto;
     flex: 1;
 }
 
 .error-message {
     flex: 1;
+    overflow: auto;
     color: red;
 }
 
