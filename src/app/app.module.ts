@@ -19,11 +19,14 @@ import { PasswordModule } from 'primeng/password';
 import { CheckboxModule } from 'primeng/checkbox';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { DropdownModule } from 'primeng/dropdown';
+import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { DynamicButtonComponent } from './components/dynamic-button/dynamic-button.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MessageAreaComponent } from './components/message-area/message-area.component';
+import { DataTableComponent } from './components/data-table/data-table.component';
+import { ToolbarColumnComponent } from './components/toolbar-column/toolbar-column.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,9 @@ import { MessageAreaComponent } from './components/message-area/message-area.com
     InputFieldComponent,
     DynamicContainerComponent,
     DynamicButtonComponent,
-    MessageAreaComponent
+    MessageAreaComponent,
+    DataTableComponent,
+    ToolbarColumnComponent
   ],
   imports: [
     AppRoutingModule,
@@ -53,6 +58,7 @@ import { MessageAreaComponent } from './components/message-area/message-area.com
     PasswordModule,
     RadioButtonModule,
     ReactiveFormsModule,
+    TableModule,
     TooltipModule
   ],
   providers: [],

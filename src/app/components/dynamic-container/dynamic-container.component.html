@@ -15,6 +15,9 @@
                     class="{{getWidgetClassName(widget)}}" [style]="widget.style" [formGroup]="dynamicFormGroup"></div>
             </ng-template>
         </ng-container>
+        <ng-container *ngSwitchCase="WTYPES.TABLE">
+            <dynamic-data-table [inputWidget]="widget"  [dynamicFormGroup]="dynamicFormGroup"></dynamic-data-table>
+        </ng-container>
         <ng-container *ngSwitchCase="WTYPES.BUTTON">
             <dynamic-button [iWidget]="widget"  [dynamicFormGroup]="dynamicFormGroup"></dynamic-button>
         </ng-container>

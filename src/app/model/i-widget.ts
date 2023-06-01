@@ -20,6 +20,19 @@ export interface IContainer extends IWidget {
     children?: IWidget[]
 }
 
+export interface IToolbarColumn extends IWidget {
+    buttons?: IButton[]
+}
+
+export interface ITable extends IWidget {
+    columns?: ITableColumn[],
+    data: any[]
+}
+
+export interface ITableColumn extends IWidget {
+
+}
+
 export interface IButton extends IWidget {
     buttonType?: string;
     onclick?: IMethodCall;
@@ -78,6 +91,7 @@ export enum WIDGET_TYPES {
     CONTAINER = 'container',
     INPUTFIELD = 'inputfield',
     BUTTON = 'button',
+    TABLE = 'table',
     OTHER = 'otherfield'
 }
 
