@@ -92,6 +92,7 @@ export enum WIDGET_TYPES {
     INPUTFIELD = 'inputfield',
     BUTTON = 'button',
     TABLE = 'table',
+    TOOLBARCOLUMN = 'toolbarcolumn',
     OTHER = 'otherfield'
 }
 
@@ -108,7 +109,7 @@ export enum WIDGET_SUB_TYPES {
     HIDDEN = 'hiddenfield',
     TEXTAREA = 'textarea',
     // backend supported type(others)
-    IMAGE = 'image',
+    IMAGE = 'image'
 }
 
 export enum LABEL_POSITION {

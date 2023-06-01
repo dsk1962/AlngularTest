@@ -1,4 +1,5 @@
-<p-table *ngIf="table && table.columns && table.data" [columns]="table.columns" [value]="table.data" [tableStyle]="{ 'min-width': '50rem' }">
+<p-table *ngIf="table && table.columns && table.data" [columns]="table.columns" [value]="table.data"
+    [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header" let-columns>
         <tr>
             <th *ngFor="let col of columns">
@@ -9,7 +10,18 @@
     <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr>
             <td *ngFor="let col of columns">
-                {{ rowData[col.name] }}
+                <ng-container [ngSwitch]="col.type">
+                    <ng-container *ngSwitchCase="WTYPES.TOOLBARCOLUMN">
+                        <div class="toolbar-column">
+                            <ng-container *ngFor="let btn of col.buttons">
+                                <dynamic-button [iWidget]="btn"/>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngSwitchDefault>
+                        {{ rowData[col.name] }}
+                    </ng-container>
+                </ng-container>
             </td>
         </tr>
     </ng-template>
