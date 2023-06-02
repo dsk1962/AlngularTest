@@ -15,6 +15,7 @@ import { Helper } from '../../shared/helper';
 export class DynamicButtonComponent extends BaseWidget {
   @Input() dynamicFormGroup?: FormGroup;
   @Input() iWidget?: IWidget;
+  @Input() data?: any;
   public iButton?: IButton;
 
   constructor(sanitizer: DomSanitizer, private applicationServiceService: ApplicationServiceService) {
@@ -24,6 +25,10 @@ export class DynamicButtonComponent extends BaseWidget {
   onClick() {
     if (this.iButton?.onclick)
       Helper.runMethod(this, this.iButton?.onclick);
+  }
+
+  getTooltip(): string {
+    return this.iButton?.tooltip ? this.iButton?.tooltip : '';
   }
 
   ngOnInit() {

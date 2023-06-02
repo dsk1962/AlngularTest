@@ -12,6 +12,7 @@ export interface IWidget {
     classNames?: string,
     subType?: string
     config?: any;
+    tooltip?: string;
 }
 
 export interface IContainer extends IWidget {
@@ -41,7 +42,6 @@ export interface IButton extends IWidget {
 export interface IInputField extends IWidget {
     required?: boolean;
     placeholder?: string;
-    tooltip?: string;
     disabled: boolean;
     readonly: boolean;
     value?: string | number | null | Date | boolean;

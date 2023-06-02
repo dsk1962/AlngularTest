@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IWidget, WIDGET_TYPES, ITable, IContainer } from '../../model/i-widget';
+import { IWidget, WIDGET_TYPES, IToolbarColumn, IContainer } from '../../model/i-widget';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { FormGroup, FormControl, AbstractControl, ValidatorFn } from '@angular/forms';
 import { BaseWidget } from '../../shared/base-widget';
@@ -11,8 +11,9 @@ import { ApplicationServiceService } from '../../services/application-service.se
   styleUrls: ['./toolbar-column.component.scss']
 })
 export class ToolbarColumnComponent   extends BaseWidget {
-  @Input() inputWidget?: IWidget;
-  @Input() rowData?: any;
+  @Input() iWidget?: IWidget;
+  @Input() column?: IToolbarColumn;
+  @Input() data?: any;
   WTYPES = WIDGET_TYPES;
 
   constructor(sanitizer :DomSanitizer,private applicationServiceService: ApplicationServiceService){
@@ -20,6 +21,7 @@ export class ToolbarColumnComponent   extends BaseWidget {
   }
 
   ngOnInit() {
-    this.widgetDefinition = this.inputWidget;
+    this.widgetDefinition = this.iWidget;
+    this.column = this.iWidget as IToolbarColumn;
   };
 }

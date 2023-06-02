@@ -12,11 +12,7 @@
             <td *ngFor="let col of columns">
                 <ng-container [ngSwitch]="col.type">
                     <ng-container *ngSwitchCase="WTYPES.TOOLBARCOLUMN">
-                        <div class="toolbar-column">
-                            <ng-container *ngFor="let btn of col.buttons">
-                                <dynamic-button [iWidget]="btn"/>
-                            </ng-container>
-                        </div>
+                        <toolbar-column [iWidget]="col" [data]="rowData"/>
                     </ng-container>
                     <ng-container *ngSwitchDefault>
                         {{ rowData[col.name] }}

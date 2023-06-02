@@ -1,1 +1,5 @@
-<p>toolbar-column works!</p>
+<div class="toolbar-column" *ngIf="column && column.buttons">
+    <ng-container *ngFor="let btn of column.buttons">
+        <dynamic-button [iWidget]="btn" [data]="data"/>
+    </ng-container>
+</div>

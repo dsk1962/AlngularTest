@@ -62,8 +62,10 @@ export class ApplicationServiceService {
               this.runAction(data.formRequest);
             else if (data.formDefinition)
               this.pushFormContainer(data.formDefinition);
-            if (data.infoMessage)
+              if (data.infoMessage)
               this.setInfoMessage(data.infoMessage);
+            if (data.newWindow && data.newWindow.url)
+              window.open(data.newWindow.url, data.newWindow.name? data.newWindow.name : '_blank',data.newWindow.parameters? data.newWindow.parameters : 'location=yes,scrollbars=yes,status=yes') ;
             if (successHandler)
               successHandler(data.result);
           }
@@ -119,6 +121,24 @@ export class ApplicationServiceService {
     request.addParameters(fgroup?.value);
     this.runAction(request);
   }
+  sendData(obj: any, action: string, ...params: string[]) {
+    let request = new ActionRequest();
+    request.action = action;
+    if (obj.data) {
+      if (params && params.length > 0) {
+        const parameters: {[index: string]:any} = {}
+        params.forEach(key => { 
+          if(obj.data[key])
+          parameters[key] = obj.data[key];
+        });
+        request.addParameters(parameters);
+      }
+      else
+        request.addParameters({ "data": obj.data });
+    }
+    this.runAction(request);
+  }
+
   postForm(obj: any, action: string) {
     let fgroup;
     if (obj instanceof FormGroup)
