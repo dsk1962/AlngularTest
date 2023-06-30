@@ -29,7 +29,14 @@ export class InputFieldComponent extends BaseWidget {
   getWrapperClass(): string {
     return this.inputWidget?.config?.labelPosition == LABEL_POSITION.TOP ? ' labeltop ' : ' labelleft ';
   }
+
+  onchange(e: any): void {
+    //console.log(this.value)
+    console.log(e);
+  }
+
   getError(errorObject: any): string {
+    if(!errorObject) return "";
     let keys = Object.keys(errorObject);
     if (keys.includes('required'))
       return 'This field is required';
@@ -92,7 +99,7 @@ export class InputFieldComponent extends BaseWidget {
       if (this.inputField.subType == WIDGET_SUB_TYPES.COMBOBOX) {
         let c = this.inputField as IComboboxField;
         var me = this;
-        setTimeout(function () { if (c.listName) me.applicationServiceService.getOptions(me, c.listName); }, 3);
+        setTimeout(function () { me.applicationServiceService.getOptions(me, c); }, 3);
       }
     }
   }

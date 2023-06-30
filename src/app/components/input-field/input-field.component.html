@@ -46,7 +46,7 @@
                 <p-dropdown [options]="options" [optionLabel]="getIComboboxField().optionLabel || 'name'"
                     [readonly]="inputField.readonly" pTooltip="{{getTooltip()}}"
                     [optionValue]="getIComboboxField().optionValue || 'value'" placeholder="{{getPlaceholder()}}"
-                    [formControlName]="HELPER.getControlName(inputField)"></p-dropdown>
+                    [formControlName]="HELPER.getControlName(inputField)" (onChange)="onchange($event)"></p-dropdown>
             </ng-container>
             <ng-container *ngSwitchDefault>
                 <input class="{{getClassName()}}" pInputText type="text" [id]="inputField.id"

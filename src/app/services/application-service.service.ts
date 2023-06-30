@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ActionRequest, IContainer } from '../model/i-widget';
+import { IInputField, ITextField, INumericField, IDateField, IWidget, LABEL_POSITION, WIDGET_SUB_TYPES, IComboboxField, IMethodCall } from '../model/i-widget';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable, throwError, lastValueFrom } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 
 
-const endpoint = 'http://localhost:8091/esignPOC/';
+const endpoint = 'http://localhost:8092/ecmsign/';
 @Injectable({
   providedIn: 'root'
 })
@@ -19,8 +20,14 @@ export class ApplicationServiceService {
   private anInfoMessage: Subject<string> = new Subject<string>();    // consider putting the actual type of the data you will receive
   public infoMessage = this.anInfoMessage.asObservable();
 
+  private applicationHeaders: HttpHeaders = new HttpHeaders();
+
   pushFormContainer(container: IContainer) {
     this.aFormContainer.next(container);
+  }
+
+  setApplicationHeader(obj: any, name: string, value: string) {
+    this.applicationHeaders = this.applicationHeaders.set(name, value);
   }
 
   setErrorMessage(message: string) {
@@ -53,19 +60,20 @@ export class ApplicationServiceService {
     }
 
     var params = request.parameters ? request.parameters : {};
+    var options = { "params": params, "headers": this.applicationHeaders };
     this.http.get<any>(
-      endpoint + request.action, { "params": params }).subscribe({
+      endpoint + request.action, options).subscribe({
         next: data => {
           this.setBlockUI(false);
-          if (data.success) {
+          if (!data.errorMessage) {
             if (data.formRequest)
               this.runAction(data.formRequest);
             else if (data.formDefinition)
               this.pushFormContainer(data.formDefinition);
-              if (data.infoMessage)
+            if (data.infoMessage)
               this.setInfoMessage(data.infoMessage);
             if (data.newWindow && data.newWindow.url)
-              window.open(data.newWindow.url, data.newWindow.name? data.newWindow.name : '_blank',data.newWindow.parameters? data.newWindow.parameters : 'location=yes,scrollbars=yes,status=yes') ;
+              window.open(data.newWindow.url, data.newWindow.name ? data.newWindow.name : '_blank', data.newWindow.parameters ? data.newWindow.parameters : 'location=yes,scrollbars=yes,status=yes');
             if (successHandler)
               successHandler(data.result);
           }
@@ -84,8 +92,9 @@ export class ApplicationServiceService {
 
   postBody(action: string, body: any, successHandler?: any): void {
     this.setBlockUI(true);
+    var options = { "headers": this.applicationHeaders };
     this.http.post<any>(
-      endpoint + action, body).subscribe({
+      endpoint + action, body, options).subscribe({
         next: data => {
           this.setBlockUI(false);
           if (data.success) {
@@ -126,10 +135,10 @@ export class ApplicationServiceService {
     request.action = action;
     if (obj.data) {
       if (params && params.length > 0) {
-        const parameters: {[index: string]:any} = {}
-        params.forEach(key => { 
-          if(obj.data[key])
-          parameters[key] = obj.data[key];
+        const parameters: { [index: string]: any } = {}
+        params.forEach(key => {
+          if (obj.data[key])
+            parameters[key] = obj.data[key];
         });
         request.addParameters(parameters);
       }
@@ -158,9 +167,11 @@ export class ApplicationServiceService {
       endpoint + 'content/' + name, requestOptions));
   }
 
-  getOptions(combo: any, listName: string): void {
-    let request = new ActionRequest();
-    request.action = 'options/' + listName;
-    this.runAction(request, function (a: any) { combo.options = a; });
+  getOptions(combo: any, c: IComboboxField): void {
+    var path = c.listName ? 'options/' + c.listName : c.listUrl;
+    if (path) {
+      this.runAction(path, function (a: any) { combo.options = a;console.log(combo.value) });
+    }
   }
+
 }

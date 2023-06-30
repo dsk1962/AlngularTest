@@ -82,6 +82,7 @@ export class DynamicFormComponent extends BaseWidget {
     this.widgetDefinition = container;
     this.container = container;
     this.addField(container);
+    this.container.oninit?.forEach(entry => Helper.runMethod(this, entry));
     this.setInitValue(this.container);
   }
 

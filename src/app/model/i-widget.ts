@@ -13,6 +13,7 @@ export interface IWidget {
     subType?: string
     config?: any;
     tooltip?: string;
+    oninit?: IMethodCall[];
 }
 
 export interface IContainer extends IWidget {
@@ -69,6 +70,7 @@ export interface IComboboxField extends IInputField {
     optionLabel?: string;
     optionValue?: string;
     listName?: string;
+    listUrl?: string;
 }
 
 export interface IDateField extends IInputField {
